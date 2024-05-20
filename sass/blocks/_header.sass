@@ -1,0 +1,137 @@
+.hidden
+  display: none
+
+.workers-list
+  display: flex
+  width: 1860px
+  height: 100%
+  padding: 60px 20px 20px
+  justify-content: center
+  align-items: flex-start
+  gap: 20px
+  color: white
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 4px 8px 3px rgba(0, 0, 0, 0.15)
+  background-color: $color3
+  border-radius: 16px
+
+  &-worker
+    position: relative
+    background-color: $color2
+    padding: 44px 16px 16px
+    flex: 0 0 348px
+    text-align: center
+    display: flex
+    align-items: center
+    flex-direction: column
+    gap: 20px
+    border-radius: 10px
+
+  &-cards
+    display: flex
+    flex-direction: column
+    gap: 10px
+
+.worker-title
+  font-size: 26px
+  display: flex
+  justify-content: center
+  align-items: center
+  gap: 10px
+
+.worker-get-random-card-button
+  position: absolute
+  border-radius: 50%
+  background-color: $color1
+  width: 70px
+  height: 70px
+  top: -35px
+  padding: 0
+  display: flex
+  justify-content: center
+  align-items: center
+  border: none
+  font-size: 30px
+  border: 7px solid #2F3148
+  color: white
+  transition: 0.1s ease
+  cursor: pointer
+  &:hover
+    color: rgba(0, 0, 0, 0)
+    background-image: url(./images/down.svg)
+    background-repeat: no-repeat
+    background-position: center center
+    border: 4px solid #2F3148
+
+  &:active
+    border: 7px solid #2F3148
+
+.worker-new-cards-bar
+  position: absolute
+  top: -35px
+  right: 137px
+  width: 27px
+  height: 27px
+  background-color: #329630
+  border-radius: 50%
+  font-size: 20px
+  line-height: 1.3em
+
+.worker-crown
+  position: absolute
+  top: -29px
+  right: -11px
+  width: 60px
+  height: 60px
+  transform: rotate(23deg)
+
+.bonus-card
+  width: 316px
+  height: 35px
+  border-radius: 10px
+  background-color: $color4
+  z-index: 0
+  font-size: 20px
+  line-height: 1.6em
+  cursor: pointer
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.25)
+
+  &:hover
+    background-color: $color6
+
+  &:active
+    transform: translateY(2px)
+    box-shadow: none
+
+  &-text
+    pointer-events: none
+
+.progress
+  position: relative
+  width: 316px
+  height: 20px
+
+  &-bg
+    position: absolute
+    width: 100%
+    height: 100%
+    border-radius: 20px
+    background-color: $color1
+    box-shadow: inset 0 3px 4px 0 rgba(0, 0, 0, 0.25)
+
+  &-bar
+    position: absolute
+    width: 200px
+    border-radius: 20px
+    background-color: $color4
+    height: 100%
+
+  &-text
+    position: absolute
+    width: 100%
+    font-size: 16px
+    text-align: center
+    line-height: 1.2em
+
+
+
+
