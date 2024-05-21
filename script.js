@@ -1,51 +1,6 @@
 const getRandomButtons = document.querySelectorAll(".worker-get-random-card-button")
 let crownsId = document.querySelectorAll('.worker-crown')
 
-let worker0 = {
-  id: 0,
-  name: document.querySelectorAll('.worker-name')[0].textContent,
-  exp: 0,
-  level: 1,
-  cards: [],
-  usedCards: [],
-};
-let worker1 = {
-  id: 1,
-  name: document.querySelectorAll('.worker-name')[1].textContent,
-  exp: 0,
-  level: 1,
-  cards: [],
-  usedCards: [],
-};
-let worker2 = {
-  id: 2,
-  name: document.querySelectorAll('.worker-name')[2].textContent,
-  exp: 0,
-  level: 1,
-  cards: [],
-  usedCards: [],
-};
-let worker3 = {
-  id: 3,
-  name: document.querySelectorAll('.worker-name')[3].textContent,
-  exp: 0,
-  level: 1,
-  cards: [],
-  usedCards: [],
-};
-let worker4 = {
-  id: 4,
-  name: document.querySelectorAll('.worker-name')[4].textContent,
-  exp: 0,
-  level: 1,
-  cards: [],
-  usedCards: [],
-};
-
-
-let workersList = [worker0, worker1, worker2, worker3, worker4];
-let currentWorkerId;
-
 const cards = [
   "Освобождение от разгрузки",
   "Освобождение от дежурства",
@@ -63,36 +18,142 @@ const cards = [
   "-200 руб. за неверные ценники",
 ];
 
-const getCrown = function() {
-  //Массив с уровнями сотрудников
-  let workersLevels = []
+let worker0 = {
+  id: 0,
+  name: document.querySelectorAll('.worker-name')[0].textContent,
+  exp: 0,
+  currentExpOfLevel: 0,
+  neededExpToNextLevel: 0,
+  level: 5,
+  cards: [],
+  usedCards: [],
+  isLeader: false,
+  rolls: 0,
+};
+let worker1 = {
+  id: 1,
+  name: document.querySelectorAll('.worker-name')[1].textContent,
+  exp: 0,
+  currentExpOfLevel: 0,
+  neededExpToNextLevel: 0,
+  level: 12,
+  cards: [],
+  usedCards: [],
+  isLeader: false,
+  rolls: 0,
+};
+let worker2 = {
+  id: 2,
+  name: document.querySelectorAll('.worker-name')[2].textContent,
+  exp: 0,
+  currentExpOfLevel: 0,
+  neededExpToNextLevel: 0,
+  level: 12,
+  cards: [],
+  usedCards: [],
+  isLeader: false,
+  rolls: 0,
+};
+let worker3 = {
+  id: 3,
+  name: document.querySelectorAll('.worker-name')[3].textContent,
+  exp: 0,
+  currentExpOfLevel: 0,
+  neededExpToNextLevel: 0,
+  level: 3,
+  cards: [],
+  usedCards: [],
+  isLeader: false,
+  rolls: 0,
+};
+let worker4 = {
+  id: 4,
+  name: document.querySelectorAll('.worker-name')[4].textContent,
+  exp: 0,
+  currentExpOfLevel: 0,
+  neededExpToNextLevel: 0,
+  level: 11,
+  cards: [],
+  usedCards: [],
+  isLeader: false,
+  rolls: 0,
+};
 
-  // Переводим все уровни работников в массив с числами
-  let levelNumber
-  for (i = 0; i < getRandomButtons.length; i++) {
-    levelNumber = Number(getRandomButtons[i].textContent)
-    workersLevels.push(levelNumber)
-  }  
+let workersList = [worker0, worker1, worker2, worker3, worker4];
 
-  // Ищем максимальный уровень (если он не равен 1)
-  let maxLevel
-  if (Math.max.apply(null, workersLevels) > 1) {
-    maxLevel = Math.max.apply(null, workersLevels)
-  } else return
+let currentWorkerId;
 
-  // Собираем массив с ID сотрудников, имеющих максимальный уровень
-  let workersWithMaxLevels = []
-  for (i = 0; i < workersLevels.length; i++) {
-    if (workersLevels[i] === maxLevel) {
-      workersWithMaxLevels.push(i)
-    }
-  }
+const expBrakpoints = [
+0,     // 1 лвл
+2100,  // 2 лвл
+3300,  // 3 лвл
+4600,  // 4 лвл
+6000,  // 5 лвл
+7500,  // 6 лвл
+9200,  // 7 лвл
+11100, // 8 лвл
+13200, // 9 лвл
+15500, // 10 лвл
+18000, // 11 лвл
+20800, // 12 лвл
+23900, // 13 лвл
+27300, // 14 лвл
+31000, // 15 лвл
+35100, // 16 лвл
+39600, // 17 лвл
+44600, // 18 лвл
+50100, // 19 лвл
+]
 
-  // Показываем короны с ID макисмальных уровней
-  workersWithMaxLevels.forEach(element => {
-    crownsId[element].classList.remove('hidden')
-  });
+// -------------------- Получить ID сотрудника и количество опыта, установить уровень сотрудника,  --------------------
+let setWorkerLevel = function(workerId, expIncome) {
+    workersList[workerId].exp += expIncome;
+    if (workersList[workerId].exp >= expBrakpoints[0]) {workersList[workerId].level = 1; workersList[workerId].neededExpToNextLevel = expBrakpoints[1] - expBrakpoints[0]; workersList[workerId].currentExpOfLevel = workersList[workerId].exp - expBrakpoints[0]} 
+    if (workersList[workerId].exp >= expBrakpoints[1]) {workersList[workerId].level = 2; workersList[workerId].neededExpToNextLevel = expBrakpoints[2] - expBrakpoints[1]; workersList[workerId].currentExpOfLevel = workersList[workerId].exp - expBrakpoints[1]}
+    if (workersList[workerId].exp >= expBrakpoints[2]) {workersList[workerId].level = 3; workersList[workerId].neededExpToNextLevel = expBrakpoints[3] - expBrakpoints[2]; workersList[workerId].currentExpOfLevel = workersList[workerId].exp - expBrakpoints[2]}
+    if (workersList[workerId].exp >= expBrakpoints[3]) {workersList[workerId].level = 4; workersList[workerId].neededExpToNextLevel = expBrakpoints[4] - expBrakpoints[3]; workersList[workerId].currentExpOfLevel = workersList[workerId].exp - expBrakpoints[3]}
+    if (workersList[workerId].exp >= expBrakpoints[4]) {workersList[workerId].level = 5; workersList[workerId].neededExpToNextLevel = expBrakpoints[5] - expBrakpoints[4]; workersList[workerId].currentExpOfLevel = workersList[workerId].exp - expBrakpoints[4]}
+    if (workersList[workerId].exp >= expBrakpoints[5]) {workersList[workerId].level = 6; workersList[workerId].neededExpToNextLevel = expBrakpoints[6] - expBrakpoints[5]; workersList[workerId].currentExpOfLevel = workersList[workerId].exp - expBrakpoints[5]}
+    if (workersList[workerId].exp >= expBrakpoints[6]) {workersList[workerId].level = 7; workersList[workerId].neededExpToNextLevel = expBrakpoints[7] - expBrakpoints[6]; workersList[workerId].currentExpOfLevel = workersList[workerId].exp - expBrakpoints[6]}
+    if (workersList[workerId].exp >= expBrakpoints[7]) {workersList[workerId].level = 8; workersList[workerId].neededExpToNextLevel = expBrakpoints[8] - expBrakpoints[7]; workersList[workerId].currentExpOfLevel = workersList[workerId].exp - expBrakpoints[7]}
+    if (workersList[workerId].exp >= expBrakpoints[8]) {workersList[workerId].level = 9; workersList[workerId].neededExpToNextLevel = expBrakpoints[9] - expBrakpoints[8]; workersList[workerId].currentExpOfLevel = workersList[workerId].exp - expBrakpoints[8]}
+    if (workersList[workerId].exp >= expBrakpoints[9]) {workersList[workerId].level = 10; workersList[workerId].neededExpToNextLevel = expBrakpoints[10] - expBrakpoints[9]; workersList[workerId].currentExpOfLevel = workersList[workerId].exp - expBrakpoints[9]}
+    if (workersList[workerId].exp >= expBrakpoints[10]) {workersList[workerId].level = 12; workersList[workerId].neededExpToNextLevel = expBrakpoints[11] - expBrakpoints[10]; workersList[workerId].currentExpOfLevel = workersList[workerId].exp - expBrakpoints[10]}
+    if (workersList[workerId].exp >= expBrakpoints[11]) {workersList[workerId].level = 13; workersList[workerId].neededExpToNextLevel = expBrakpoints[12] - expBrakpoints[11]; workersList[workerId].currentExpOfLevel = workersList[workerId].exp - expBrakpoints[11]}
+    if (workersList[workerId].exp >= expBrakpoints[12]) {workersList[workerId].level = 14; workersList[workerId].neededExpToNextLevel = expBrakpoints[13] - expBrakpoints[12]; workersList[workerId].currentExpOfLevel = workersList[workerId].exp - expBrakpoints[12]}
+    if (workersList[workerId].exp >= expBrakpoints[13]) {workersList[workerId].level = 15; workersList[workerId].neededExpToNextLevel = expBrakpoints[14] - expBrakpoints[13]; workersList[workerId].currentExpOfLevel = workersList[workerId].exp - expBrakpoints[13]}
+    if (workersList[workerId].exp >= expBrakpoints[14]) {workersList[workerId].level = 16; workersList[workerId].neededExpToNextLevel = expBrakpoints[15] - expBrakpoints[14]; workersList[workerId].currentExpOfLevel = workersList[workerId].exp - expBrakpoints[14]}
+    if (workersList[workerId].exp >= expBrakpoints[15]) {workersList[workerId].level = 17; workersList[workerId].neededExpToNextLevel = expBrakpoints[16] - expBrakpoints[15]; workersList[workerId].currentExpOfLevel = workersList[workerId].exp - expBrakpoints[15]}
+    if (workersList[workerId].exp >= expBrakpoints[16]) {workersList[workerId].level = 18; workersList[workerId].neededExpToNextLevel = expBrakpoints[17] - expBrakpoints[16]; workersList[workerId].currentExpOfLevel = workersList[workerId].exp - expBrakpoints[16]}
+    if (workersList[workerId].exp >= expBrakpoints[17]) {workersList[workerId].level = 19; workersList[workerId].neededExpToNextLevel = expBrakpoints[18] - expBrakpoints[17]; workersList[workerId].currentExpOfLevel = workersList[workerId].exp - expBrakpoints[17]}
+    if (workersList[workerId].exp >= expBrakpoints[18]) {workersList[workerId].level = 20; workersList[workerId].neededExpToNextLevel = 999999}
 }
+
+// -------------------- Загрузить короны для сотрудников с максимальным уровнем --------------------
+const getCrown = function() {
+  let currentLevels = []
+  for (i = 0; i < workersList.length; i++) {
+    let levelIsNumber = Number(workersList[i].level)
+    currentLevels.push(levelIsNumber)
+  }
+  let currentMaxLevel = Math.max.apply(null, currentLevels)
+  if (currentMaxLevel > 1) {
+    workersList.forEach(element => {
+      if (element.level === currentMaxLevel) {
+        crownsId[element.id].classList.remove('hidden')
+        element.isLeader = true
+      } else {
+        crownsId[element.id].classList.add('hidden')
+        element.isLeader = false
+      }
+    })
+  }
+}
+
+const getNewRolls = function() {
+  
+}
+
 
 let saveData = function() {
   localStorage.setItem("worker0", JSON.stringify(worker0))
@@ -102,6 +163,7 @@ let saveData = function() {
   // localStorage.setItem("worker4", JSON.stringify(worker4))
   console.log('data saved')
 }
+
 
 const loadData = function() {
   let loadedWorker0 = JSON.parse(localStorage.getItem("worker0"))
@@ -121,6 +183,16 @@ const loadData = function() {
   // console.log(worker4)
 }
 
+// -------------------- Загрузить уровни сотрудников на страницу --------------------
+const loadLevels = function() {
+  workersList.forEach(element => {
+    let currentId = element.id
+    getRandomButtons[currentId].textContent = workersList[currentId].level
+  });
+}
+
+
+// -------------------- Получить рандомную бонусную карту --------------------
 const getRandomBonusCard = function () {
   // Находим рандомно индкс карточки и её значение
   let currentCardIndex = Math.floor(Math.random() * cards.length);
@@ -146,11 +218,11 @@ const getRandomBonusCard = function () {
   // добавляем вышедшую карту в объект сотрудника
   workersList[currentWorkerId].cards.push(currentCardValue);
 
-  getCrown()
   // saveData()
 };
 
 
+// -------------------- Использовать бонусную карту --------------------
 let useBonusCard = function() {
   let currentUsedCard = event.target.children[0].innerHTML
   let currentWorkerId = event.target.getAttribute('data-workerId')
@@ -167,6 +239,8 @@ let useBonusCard = function() {
 }
 
 
+
+// -------------------- Слушатели --------------------
 
 document.addEventListener("click", function (event) {
   if (event.target.classList.contains("worker-get-random-card-button")) {
