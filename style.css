@@ -113,8 +113,14 @@ img {
 .worker-get-random-card-button:active {
   border: 7px solid #2F3148;
 }
-
-.worker-new-cards-bar {
+.worker-get-random-card-button:disabled {
+  background-color: #587099;
+  background-image: none;
+  border: 7px solid #2F3148;
+  color: white;
+  cursor: default;
+}
+.worker-rolls-bar {
   position: absolute;
   top: -35px;
   right: 137px;
