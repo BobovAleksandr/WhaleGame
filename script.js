@@ -1,5 +1,5 @@
 const getRandomButtons = document.querySelectorAll(".worker-get-random-card-button")
-const rollsBars = document.querySelectorAll(".worker-rolls-bar")
+
 
 let crownsId = document.querySelectorAll('.worker-crown')
 
@@ -25,43 +25,43 @@ let worker0 = {
   name: document.querySelectorAll('.worker-name')[0].textContent,
   exp: 0,
   currentExpOfLevel: 0,
-  neededExpToNextLevel: 0,
+  neededExpToNextLevel: 2100,
   level: 1,
   cards: [],
   usedCards: [],
   isLeader: false,
-  rolls: 3,
+  rolls: 0,
 };
 let worker1 = {
   id: 1,
   name: document.querySelectorAll('.worker-name')[1].textContent,
   exp: 0,
   currentExpOfLevel: 0,
-  neededExpToNextLevel: 0,
+  neededExpToNextLevel: 2100,
   level: 1,
   cards: [],
   usedCards: [],
   isLeader: false,
-  rolls: 2,
+  rolls: 0,
 };
 let worker2 = {
   id: 2,
   name: document.querySelectorAll('.worker-name')[2].textContent,
   exp: 0,
   currentExpOfLevel: 0,
-  neededExpToNextLevel: 0,
+  neededExpToNextLevel: 2100,
   level: 1,
   cards: [],
   usedCards: [],
   isLeader: false,
-  rolls: 3,
+  rolls: 0,
 };
 let worker3 = {
   id: 3,
   name: document.querySelectorAll('.worker-name')[3].textContent,
   exp: 0,
   currentExpOfLevel: 0,
-  neededExpToNextLevel: 0,
+  neededExpToNextLevel: 2100,
   level: 1,
   cards: [],
   usedCards: [],
@@ -73,12 +73,12 @@ let worker4 = {
   name: document.querySelectorAll('.worker-name')[4].textContent,
   exp: 0,
   currentExpOfLevel: 0,
-  neededExpToNextLevel: 0,
+  neededExpToNextLevel: 2100,
   level: 1,
   cards: [],
   usedCards: [],
   isLeader: false,
-  rolls: 6,
+  rolls: 0,
 };
 
 let workersList = [worker0, worker1, worker2, worker3, worker4];
@@ -133,13 +133,38 @@ let setWorkerLevel = function(workerId, expIncome) {
     workersList[workerId].rolls = workersList[workerId].rolls + (workersList[workerId].level - previousLevel)
 }
 
+let loadAll = function() {
+  getExpValues()
+  getRolls()
+  getCrown()
+  loadLevels()
+}
+
+// -------------------- Загрузить значения опыта в прогресс-бар --------------------
+
+let progressBarCurrentValues = document.querySelectorAll('.progress-current-value')
+let progressBarNextLevelValues = document.querySelectorAll('.progress-next-level-value')
+let progressBars = document.querySelectorAll('.progress-bar')
+
+const getExpValues = function() {
+  workersList.forEach(element => {
+    progressBarCurrentValues[element.id].textContent = element.currentExpOfLevel;
+    progressBarNextLevelValues[element.id].textContent = element.neededExpToNextLevel;
+    let currentBarPercent = Math.round((+element.currentExpOfLevel / +element.neededExpToNextLevel) * 100)
+    progressBars[element.id].style.width = currentBarPercent + '%'
+  });
+}
+
 // -------------------- Загрузить роллы сотрудникам --------------------
+
+const rollsBars = document.querySelectorAll(".worker-rolls-bar")
 
 const getRolls = function() {
   workersList.forEach(element => {
     if (element.rolls > 0) {
       rollsBars[element.id].classList.remove('hidden')
       rollsBars[element.id].textContent = element.rolls
+      getRandomButtons[element.id].disabled = false
     } 
   });
 }
@@ -210,41 +235,40 @@ const getRandomBonusCard = function () {
 
   if (workersList[currentWorkerId].rolls > 0) {
     
-  // Находим рандомно индкс карточки и её значение
-  let currentCardIndex = Math.floor(Math.random() * cards.length);
-  let currentCardValue = cards[currentCardIndex];
+    // Находим рандомно индкс карточки и её значение
+    let currentCardIndex = Math.floor(Math.random() * cards.length);
+    let currentCardValue = cards[currentCardIndex];
 
-  // Создаём новый блок с этой карточкой
-  let newWorkersCard = document.createElement("li")
-  let newWorkersCardTitle = document.createElement("span")
-  newWorkersCardTitle.classList.add("bonus-card-text")
+    // Создаём новый блок с этой карточкой
+    let newWorkersCard = document.createElement("li")
+    let newWorkersCardTitle = document.createElement("span")
+    newWorkersCardTitle.classList.add("bonus-card-text")
 
-  newWorkersCardTitle.innerHTML = currentCardValue
-  newWorkersCard.classList.add("bonus-card")
-  newWorkersCard.setAttribute('data-workerId', currentWorkerId)
+    newWorkersCardTitle.innerHTML = currentCardValue
+    newWorkersCard.classList.add("bonus-card")
+    newWorkersCard.setAttribute('data-workerId', currentWorkerId)
 
-  // Добавляем карточку сотруднику
-  let currentWorkerHtmlNode = document.querySelectorAll(".workers-list-cards")[currentWorkerId];
-  let currentChild = currentWorkerHtmlNode.appendChild(newWorkersCard);
-  currentChild.appendChild(newWorkersCardTitle)
+    // Добавляем карточку сотруднику
+    let currentWorkerHtmlNode = document.querySelectorAll(".workers-list-cards")[currentWorkerId];
+    let currentChild = currentWorkerHtmlNode.appendChild(newWorkersCard);
+    currentChild.appendChild(newWorkersCardTitle)
 
-  // Удаляем из списка карточек вышедшую
-  cards.splice(currentCardIndex, 1);
+    // Удаляем из списка карточек вышедшую
+    cards.splice(currentCardIndex, 1);
 
-  // Добавляем вышедшую карту в объект сотрудника
-  workersList[currentWorkerId].cards.push(currentCardValue);
+    // Добавляем вышедшую карту в объект сотрудника
+    workersList[currentWorkerId].cards.push(currentCardValue);
 
-  // Убавляем счётчик роллов
-  workersList[currentWorkerId].rolls--
-  rollsBars[currentWorkerId].textContent = workersList[currentWorkerId].rolls
+    // Убавляем счётчик роллов
+    workersList[currentWorkerId].rolls--
+    rollsBars[currentWorkerId].textContent = workersList[currentWorkerId].rolls
 
-  if (workersList[currentWorkerId].rolls === 0) {
-    rollsBars[currentWorkerId].classList.add('hidden')
-    getRandomButtons[currentWorkerId].disabled = true
-  }
-
+    // Если счётчик становится равен нулю прячем его и деактивируем кнопку
+    if (workersList[currentWorkerId].rolls === 0) {
+      rollsBars[currentWorkerId].classList.add('hidden')
+      getRandomButtons[currentWorkerId].disabled = true
+    }
   } 
-
   // saveData()
 };
 
