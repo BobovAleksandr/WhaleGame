@@ -17,7 +17,7 @@ const cards = [
   "Освобождение от выставления",
   "Освобождение от переоценки",
   "Освобождение от уборки",
-  "-200 руб. за неверные ценники",
+  "-300 позиций в инвентаризацию",
 ];
 
 let worker0 = {
@@ -82,8 +82,6 @@ let worker4 = {
 };
 
 let workersList = [worker0, worker1, worker2, worker3, worker4];
-
-let currentWorkerId;
 
 const expBrakpoints = [
 0,     // 1 лвл
@@ -200,6 +198,7 @@ adminPanelButtonMove.addEventListener('click', () => {
   adminPanelButtonImage.classList.toggle('rotated')
   adminPanelSelect.value = ''
   adminPanelInput.value = ''
+  console.log('1')
 })
 
 // начисленеи опыта по нажатию кнопки и запуск функций
@@ -255,27 +254,92 @@ const loadLevels = function() {
 
 
 // -------------------- Получить рандомную бонусную карту --------------------
-const getRandomBonusCard = function () {
+const getRandomBonusCard = function (currentWorkerId) {
 
   if (workersList[currentWorkerId].rolls > 0) {
     
-    // Находим рандомно индкс карточки и её значение
+    // Находим рандомно индекс карточки и её значение
     let currentCardIndex = Math.floor(Math.random() * cards.length);
     let currentCardValue = cards[currentCardIndex];
 
     // Создаём новый блок с этой карточкой
     let newWorkersCard = document.createElement("li")
+    newWorkersCard.classList.add("bonus-card")
+
+    // Название
     let newWorkersCardTitle = document.createElement("span")
     newWorkersCardTitle.classList.add("bonus-card-text")
-
     newWorkersCardTitle.innerHTML = currentCardValue
-    newWorkersCard.classList.add("bonus-card")
     newWorkersCard.setAttribute('data-workerId', currentWorkerId)
 
+    // Поле выбора сотрудника при передаче
+    let newBonusCardSelect = document.createElement("select")
+    newBonusCardSelect.classList.add("bonus-card-select")
+
+    // Опция-плейсхолдер
+    let newBonusCardOptionDisabled = document.createElement("option")
+    newBonusCardSelect.classList.add("bonus-card-option")
+    newBonusCardOptionDisabled.disabled = true
+    newBonusCardOptionDisabled.selected = true
+
+    // Сотрудники
+    let newBonusCardOption0 = document.createElement("option")
+    newBonusCardOption0.classList.add("bonus-card-option")
+    newBonusCardOption0.value = 0
+    newBonusCardOption0.textContent = workersList[0].name
+
+    let newBonusCardOption1 = document.createElement("option")
+    newBonusCardOption1.classList.add("bonus-card-option")
+    newBonusCardOption1.value = 1
+    newBonusCardOption1.textContent = workersList[1].name
+
+    let newBonusCardOption2 = document.createElement("option")
+    newBonusCardOption2.classList.add("bonus-card-option")
+    newBonusCardOption2.value = 2
+    newBonusCardOption2.textContent = workersList[2].name
+
+    let newBonusCardOption3 = document.createElement("option")
+    newBonusCardOption3.classList.add("bonus-card-option")
+    newBonusCardOption3.value = 3
+    newBonusCardOption3.textContent = workersList[3].name
+
+    let newBonusCardOption4 = document.createElement("option")
+    newBonusCardOption4.classList.add("bonus-card-option")
+    newBonusCardOption4.value = 4
+    newBonusCardOption4.textContent = workersList[4].name
+
+    // Массив сотрудником
+    let bonusOptions = [
+      newBonusCardOption0, 
+      newBonusCardOption1, 
+      newBonusCardOption2, 
+      newBonusCardOption3, 
+      newBonusCardOption4
+    ]
+
+    // Кнопка передачи карточки
+    let newBonusCardGiveButton = document.createElement("button")
+    newBonusCardGiveButton.classList.add("bonus-card-give-button")
+    newBonusCardGiveButton.classList.add("bonus-card-button")
+
+    // Кнопка использования карточки
+    let newBonusCardUseButton = document.createElement("button")
+    newBonusCardUseButton.classList.add("bonus-card-use-button")
+    newBonusCardUseButton.classList.add("bonus-card-button")
+    
     // Добавляем карточку сотруднику
     let currentWorkerHtmlNode = document.querySelectorAll(".workers-list-cards")[currentWorkerId];
     let currentChild = currentWorkerHtmlNode.appendChild(newWorkersCard);
     currentChild.appendChild(newWorkersCardTitle)
+    currentChild.appendChild(newBonusCardSelect)
+    newBonusCardSelect.appendChild(newBonusCardOptionDisabled)
+    for (i = 0; i < bonusOptions.length; i++) {
+      if (i != currentWorkerId) {
+        newBonusCardSelect.appendChild(bonusOptions[i])
+      } 
+    }
+    currentChild.appendChild(newBonusCardGiveButton)
+    currentChild.appendChild(newBonusCardUseButton)
 
     // Удаляем из списка карточек вышедшую
     cards.splice(currentCardIndex, 1);
@@ -297,36 +361,114 @@ const getRandomBonusCard = function () {
 };
 
 
-// -------------------- Использовать бонусную карту --------------------
-let useBonusCard = function() {
-  let currentUsedCard = event.target.children[0].innerHTML
-  let currentWorkerId = event.target.getAttribute('data-workerId')
-  for (i = 0; i < workersList.length; i++) {
-    if (+currentWorkerId === +workersList[i].id) {
-      workersList[i].usedCards.push(currentUsedCard)
-      event.target.remove()
+// -------------------- Сдвинуть бонусную карту --------------------
+
+let openBonusCard = function() {
+  let currentCardTextBlock = event.target
+  let currentCard = currentCardTextBlock.parentNode
+  let currentCardSelect = currentCard.querySelector('.bonus-card-select')
+  currentCardTextBlock.classList.toggle('moved-left')
+
+  if (currentCardTextBlock.classList.contains('moved-left-far')) {
+    currentCardTextBlock.classList.remove('moved-left-far')
+    if (currentCardSelect.value) {
+      currentCardSelect.value = ''
     }
   }
-  let indexOfWorkerCard = workersList[currentWorkerId].cards.indexOf(currentUsedCard)
-  workersList[currentWorkerId].cards.splice(indexOfWorkerCard, 1)
-
-  // saveData()
+    // saveData()
 }
 
+// -------------------- Сдвинуть дальше бонусную карту --------------------
 
+let openWideBonusCard = function() {
+  let currentCard = event.target.parentElement
+  let currentCardTextBlock = currentCard.querySelector('.bonus-card-text')
+  currentCardTextBlock.classList.toggle('moved-left-far')
+}
+
+// -------------------- Использовать бонусную карту --------------------
+
+let useBonusCard = function() {
+  let currentCard = event.target.parentElement
+  let currentCardValue = currentCard.querySelector('.bonus-card-text').textContent
+  let currentWorkerId = currentCard.dataset['workerid']
+  let indexOfWorkerCard = workersList[currentWorkerId].cards.indexOf(currentCardValue)
+  currentCard.remove()
+  workersList[currentWorkerId].usedCards.push(currentCardValue)
+  workersList[currentWorkerId].cards.splice(indexOfWorkerCard, 1)
+}
+
+// -------------------- Передать бонусную карту --------------------
+
+let giveBonusCard = function() {
+  let currentSelect = event.target
+  let currentCard = currentSelect.parentNode
+  let currentCardTextField = currentCard.querySelector('.bonus-card-text')
+  let currentCardValue = currentCardTextField.textContent
+  let currentWorkerId = currentCard.dataset['workerid']
+  let newWorkerId = currentSelect.value
+  let indexOfWorkerCard = workersList[currentWorkerId].cards.indexOf(currentCardValue)
+  let newCardField = document.querySelectorAll('.workers-list-cards')[newWorkerId]
+  
+  // Меняем ID карты
+  currentCard.dataset['workerid'] = newWorkerId
+
+  // Удаляем сдвиг блока текста карты
+  currentCardTextField.classList.remove('moved-left-far')
+  currentCardTextField.classList.remove('moved-left')
+  currentSelect.value = ''
+
+  // Удаляем карту
+  currentCard.remove()
+
+  // Перемещаем карту в другой объект-сотрудник
+  workersList[currentWorkerId].cards.splice(indexOfWorkerCard, 1)
+  workersList[newWorkerId].cards.push(currentCardValue)
+  
+  // Отрисовываем карту у нового сотрудника и корректируем select (убираем его же)
+  let newCard = newCardField.appendChild(currentCard)
+  let newCardOptions = newCard.querySelectorAll('.bonus-card-option')
+  for (i = 0; i < newCardOptions.length; i++) {
+    if (newCardOptions[i].value === newWorkerId) {
+      newCardOptions[i].value = currentWorkerId
+      newCardOptions[i].textContent = workersList[currentWorkerId].name
+    }
+  }
+}
 
 // -------------------- Слушатели --------------------
 
-document.addEventListener("click", function (event) {
+document.addEventListener("click", function(event) {
   if (event.target.classList.contains("worker-get-random-card-button")) {
-    currentWorkerId = event.target.id;
-    getRandomBonusCard();
+    getRandomBonusCard(event.target.id);
   }
-  if (event.target.classList.contains("bonus-card")) {
+  if (event.target.classList.contains("bonus-card-text")) {
+    openBonusCard()
+  }
+  if (event.target.classList.contains("bonus-card-use-button")) {
     useBonusCard()
   }
-  if (event.target.classList.contains("lvlButton")) {
-    addLevel()
+  if (event.target.classList.contains("bonus-card-give-button")) {
+    openWideBonusCard()
   }
 });
 
+document.addEventListener('change', function(event) {
+  if (event.target.classList.contains("bonus-card-select")) {
+    giveBonusCard();
+  }
+})
+
+const randomButton = document.querySelector('.random-button')
+randomButton.addEventListener('click', () => {
+  console.log('random!')
+  workersList.forEach(element => {
+    let id = element.id
+    let exp = Math.round((Math.random() * 10000) + 3000)
+    setWorkerLevel(id, exp)
+    getExpValues()
+    getRolls()
+    getCrown()
+    loadLevels()
+  });
+})
