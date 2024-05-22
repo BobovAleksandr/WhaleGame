@@ -2,6 +2,7 @@
   display: none
 
 .workers-list
+  position: relative
   display: flex
   width: 1860px
   height: 100%
@@ -150,5 +151,93 @@
     &-inner
       letter-spacing: 0.09em
 
+
+.admin-panel
+  display: flex
+  gap: 4px
+  padding: 4px
+  position: absolute
+  width: 278px
+  height: 30px
+  border-bottom-right-radius: 10px
+  border-bottom-left-radius: 10px
+  background-color: $color2
+  z-index: 1
+  top: 0
+  transition: transform 0.2s ease
+
+  &.pushed-in
+    transform: translateY(-30px)
+
+  &-button-move
+    position: absolute
+    width: 46px
+    height: 16px
+    border-bottom-right-radius: 10px
+    border-bottom-left-radius: 10px
+    background-color: $color2
+    z-index: 1
+    top: 30px
+    left: 116px
+    border: none
+    
+    &:hover
+      cursor: pointer
+
+  &-button-image
+    margin: 0 auto
+    width: 16px
+    height: 16px
+    pointer-events: none
+    transition: transform 0.2s ease
+
+    &.rotated
+      transform: rotate(180deg)
+
+  &-select
+    width: 186px
+    padding: 2px 4px
+    background-color: $color1
+    border-radius: 7px
+    border: none
+    box-shadow: inset 0 3px 4px 0 rgba(0, 0, 0, 0.25)
+    color: white
+    font-size: 14px
+    letter-spacing: 0.05em
+    line-height: 1em
+
+    &:focus-visible
+      outline: none
+
+  &-input
+    width: 54px
+    padding: 2px 4px
+    background-color: $color1
+    border-radius: 7px
+    border: none
+    box-shadow: inset 0 3px 4px 0 rgba(0, 0, 0, 0.25)
+    color: white
+    font-size: 14px
+    letter-spacing: 0.05em
+    line-height: 1em
+    
+    &:focus-visible
+      outline: none
+
+  &-button-submit
+    width: 22px
+    height: 22px
+    background-color: $color1
+    border-radius: 7px
+    background-image: url(./images/cross.svg)
+    background-repeat: no-repeat
+    background-position: center center
+
+    &:hover
+      cursor: pointer
+      box-shadow: inset 0 3px 4px 0 rgba(0, 0, 0, 0.25)
+
+    &:active
+      box-shadow: none
 
 

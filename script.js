@@ -133,12 +133,6 @@ let setWorkerLevel = function(workerId, expIncome) {
     workersList[workerId].rolls = workersList[workerId].rolls + (workersList[workerId].level - previousLevel)
 }
 
-let loadAll = function() {
-  getExpValues()
-  getRolls()
-  getCrown()
-  loadLevels()
-}
 
 // -------------------- Загрузить значения опыта в прогресс-бар --------------------
 
@@ -190,6 +184,36 @@ const getCrown = function() {
     })
   }
 }
+
+// -------------------- Админ панель --------------------
+const adminPanel = document.querySelector('.admin-panel')
+const adminPanelButtonMove = document.querySelector('.admin-panel-button-move')
+const adminPanelButtonImage = document.querySelector('.admin-panel-button-image')
+const adminPanelButtonSubmit = document.querySelector('.admin-panel-button-submit')
+const adminPanelSelect = document.querySelector('.admin-panel-select')
+const adminPanelInput = document.querySelector('.admin-panel-input')
+
+
+// Открытие и закрытие панели
+adminPanelButtonMove.addEventListener('click', () => {
+  adminPanel.classList.toggle('pushed-in')
+  adminPanelButtonImage.classList.toggle('rotated')
+  adminPanelSelect.value = ''
+  adminPanelInput.value = ''
+})
+
+// начисленеи опыта по нажатию кнопки и запуск функций
+adminPanelButtonSubmit.addEventListener('click', () => {
+  let selectedWorker = adminPanelSelect.value
+  let gainedExp = Number(adminPanelInput.value)
+  setWorkerLevel(selectedWorker, gainedExp)
+  adminPanelSelect.value = ''
+  adminPanelInput.value = ''
+  getExpValues()
+  getRolls()
+  getCrown()
+  loadLevels()
+})
 
 
 

@@ -7,6 +7,21 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <form class="admin-panel pushed-in" onsubmit="return false;">
+    <button class="admin-panel-button-move" type="button">
+      <img src="./images/downarr.png" class="admin-panel-button-image">
+    </button>
+    <select class="admin-panel-select" name="admin-panel-select" id="admin-panel-select">
+      <option class="admin-panel-option" value="" disabled selected></option>
+      <option class="admin-panel-option" value="0">Костиков Юрий</option>
+      <option class="admin-panel-option" value="1">Сапожников Евгений</option>
+      <option class="admin-panel-option" value="2">Шаров Алексей</option>
+      <option class="admin-panel-option" value="3">Кучукбаев Айдар</option>
+      <option class="admin-panel-option" value="4">Конев Михаил</option>
+    </select>
+    <input class="admin-panel-input" type="number">
+    <button class="admin-panel-button-submit" type="submit"></button>
+  </form>
   <ul class="workers-list">
     <li class="workers-list-worker">
       <div class="worker-crown hidden">
@@ -21,12 +36,15 @@
         <div class="progress-bg"></div>
         <div class="progress-bar"></div>
         <div class="progress-text">
-            <span class="progress-current-value progress-text-inner">0</span>
-            <span class="progress-text-inner">/</span>
-            <span class="progress-next-level-value progress-text-inner">2100</span>
+          <span class="progress-current-value progress-text-inner">0</span>
+          <span class="progress-text-inner">/</span>
+          <span class="progress-next-level-value progress-text-inner">2100</span>
         </div>
       </div>
       <ul class="workers-list-cards">
+        <li class="bonus-card" data-workerid="0">
+          <span class="bonus-card-text">Освобождение от выставления</span>
+        </li>
       </ul>
     </li>
     <li class="workers-list-worker">
@@ -42,9 +60,9 @@
         <div class="progress-bg"></div>
         <div class="progress-bar"></div>
         <div class="progress-text">
-            <span class="progress-current-value progress-text-inner">0</span>
-            <span class="progress-text-inner">/</span>
-            <span class="progress-next-level-value progress-text-inner">2100</span>
+          <span class="progress-current-value progress-text-inner">0</span>
+          <span class="progress-text-inner">/</span>
+          <span class="progress-next-level-value progress-text-inner">2100</span>
         </div>
       </div>
       <ul class="workers-list-cards">
@@ -63,9 +81,9 @@
         <div class="progress-bg"></div>
         <div class="progress-bar"></div>
         <div class="progress-text">
-            <span class="progress-current-value progress-text-inner">0</span>
-            <span class="progress-text-inner">/</span>
-            <span class="progress-next-level-value progress-text-inner">2100</span>
+          <span class="progress-current-value progress-text-inner">0</span>
+          <span class="progress-text-inner">/</span>
+          <span class="progress-next-level-value progress-text-inner">2100</span>
         </div>
       </div>
       <ul class="workers-list-cards">
@@ -84,9 +102,9 @@
         <div class="progress-bg"></div>
         <div class="progress-bar"></div>
         <div class="progress-text">
-            <span class="progress-current-value progress-text-inner">0</span>
-            <span class="progress-text-inner">/</span>
-            <span class="progress-next-level-value progress-text-inner">2100</span>
+          <span class="progress-current-value progress-text-inner">0</span>
+          <span class="progress-text-inner">/</span>
+          <span class="progress-next-level-value progress-text-inner">2100</span>
         </div>
       </div>
       <ul class="workers-list-cards">
@@ -105,9 +123,9 @@
         <div class="progress-bg"></div>
         <div class="progress-bar"></div>
         <div class="progress-text">
-            <span class="progress-current-value progress-text-inner">0</span>
-            <span class="progress-text-inner">/</span>
-            <span class="progress-next-level-value progress-text-inner">2100</span>
+          <span class="progress-current-value progress-text-inner">0</span>
+          <span class="progress-text-inner">/</span>
+          <span class="progress-next-level-value progress-text-inner">2100</span>
         </div>
       </div>
       <ul class="workers-list-cards">

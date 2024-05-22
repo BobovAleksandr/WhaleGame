@@ -25,7 +25,7 @@
 }
 
 body {
-  font-family: DNS-Regular, sans-serif;
+  position: relative;
   padding: 30px;
   display: flex;
   gap: 50px;
@@ -42,11 +42,22 @@ img {
   height: 100%;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+button {
+  border: none;
+}
+
 .hidden {
   display: none;
 }
 
 .workers-list {
+  position: relative;
   display: flex;
   width: 1860px;
   height: 100%;
@@ -197,4 +208,93 @@ img {
 }
 .progress-text-inner {
   letter-spacing: 0.09em;
+}
+
+.admin-panel {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  position: absolute;
+  width: 278px;
+  height: 30px;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  background-color: #587099;
+  z-index: 1;
+  top: 0;
+  transition: transform 0.2s ease;
+}
+.admin-panel.pushed-in {
+  transform: translateY(-30px);
+}
+.admin-panel-button-move {
+  position: absolute;
+  width: 46px;
+  height: 16px;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  background-color: #587099;
+  z-index: 1;
+  top: 30px;
+  left: 116px;
+  border: none;
+}
+.admin-panel-button-move:hover {
+  cursor: pointer;
+}
+.admin-panel-button-image {
+  margin: 0 auto;
+  width: 16px;
+  height: 16px;
+  pointer-events: none;
+  transition: transform 0.2s ease;
+}
+.admin-panel-button-image.rotated {
+  transform: rotate(180deg);
+}
+.admin-panel-select {
+  width: 186px;
+  padding: 2px 4px;
+  background-color: #3F5576;
+  border-radius: 7px;
+  border: none;
+  box-shadow: inset 0 3px 4px 0 rgba(0, 0, 0, 0.25);
+  color: white;
+  font-size: 14px;
+  letter-spacing: 0.05em;
+  line-height: 1em;
+}
+.admin-panel-select:focus-visible {
+  outline: none;
+}
+.admin-panel-input {
+  width: 54px;
+  padding: 2px 4px;
+  background-color: #3F5576;
+  border-radius: 7px;
+  border: none;
+  box-shadow: inset 0 3px 4px 0 rgba(0, 0, 0, 0.25);
+  color: white;
+  font-size: 14px;
+  letter-spacing: 0.05em;
+  line-height: 1em;
+}
+.admin-panel-input:focus-visible {
+  outline: none;
+}
+.admin-panel-button-submit {
+  width: 22px;
+  height: 22px;
+  background-color: #3F5576;
+  border-radius: 7px;
+  background-image: url(./images/cross.svg);
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+.admin-panel-button-submit:hover {
+  cursor: pointer;
+  box-shadow: inset 0 3px 4px 0 rgba(0, 0, 0, 0.25);
+}
+.admin-panel-button-submit:active {
+  box-shadow: none;
 }/*# sourceMappingURL=style.css.map */
