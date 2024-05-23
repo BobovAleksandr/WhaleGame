@@ -22,7 +22,7 @@ const cards = [
 
 let worker0 = {
   id: 0,
-  name: document.querySelectorAll('.worker-name')[0].textContent,
+  name,
   exp: 0,
   currentExpOfLevel: 0,
   neededExpToNextLevel: 2100,
@@ -34,7 +34,7 @@ let worker0 = {
 };
 let worker1 = {
   id: 1,
-  name: document.querySelectorAll('.worker-name')[1].textContent,
+  name,
   exp: 0,
   currentExpOfLevel: 0,
   neededExpToNextLevel: 2100,
@@ -46,7 +46,7 @@ let worker1 = {
 };
 let worker2 = {
   id: 2,
-  name: document.querySelectorAll('.worker-name')[2].textContent,
+  name,
   exp: 0,
   currentExpOfLevel: 0,
   neededExpToNextLevel: 2100,
@@ -58,7 +58,7 @@ let worker2 = {
 };
 let worker3 = {
   id: 3,
-  name: document.querySelectorAll('.worker-name')[3].textContent,
+  name,
   exp: 0,
   currentExpOfLevel: 0,
   neededExpToNextLevel: 2100,
@@ -70,7 +70,7 @@ let worker3 = {
 };
 let worker4 = {
   id: 4,
-  name: document.querySelectorAll('.worker-name')[4].textContent,
+  name, 
   exp: 0,
   currentExpOfLevel: 0,
   neededExpToNextLevel: 2100,
@@ -81,7 +81,14 @@ let worker4 = {
   rolls: 0,
 };
 
-let workersList = [worker0, worker1, worker2, worker3, worker4];
+let workersList = []
+
+if (document.querySelectorAll('.worker-name')[0]) {worker0.name = document.querySelectorAll('.worker-name')[0].textContent; workersList.push(worker0)}
+if (document.querySelectorAll('.worker-name')[1]) {worker1.name = document.querySelectorAll('.worker-name')[1].textContent; workersList.push(worker1)}
+if (document.querySelectorAll('.worker-name')[2]) {worker2.name = document.querySelectorAll('.worker-name')[2].textContent; workersList.push(worker2)}
+if (document.querySelectorAll('.worker-name')[3]) {worker3.name = document.querySelectorAll('.worker-name')[3].textContent; workersList.push(worker3)}
+if (document.querySelectorAll('.worker-name')[4]) {worker4.name = document.querySelectorAll('.worker-name')[4].textContent; workersList.push(worker4)}
+
 
 const expBrakpoints = [
 0,     // 1 лвл
@@ -283,39 +290,48 @@ const getRandomBonusCard = function (currentWorkerId) {
     newBonusCardOptionDisabled.selected = true
 
     // Сотрудники
-    let newBonusCardOption0 = document.createElement("option")
-    newBonusCardOption0.classList.add("bonus-card-option")
-    newBonusCardOption0.value = 0
-    newBonusCardOption0.textContent = workersList[0].name
+    let bonusOptions = []
 
-    let newBonusCardOption1 = document.createElement("option")
-    newBonusCardOption1.classList.add("bonus-card-option")
-    newBonusCardOption1.value = 1
-    newBonusCardOption1.textContent = workersList[1].name
+    if (worker0.name) {
+      let newBonusCardOption0 = document.createElement("option")
+      newBonusCardOption0.classList.add("bonus-card-option")
+      newBonusCardOption0.value = 0
+      newBonusCardOption0.textContent = workersList[0].name
+      bonusOptions.push(newBonusCardOption0)
+    }
 
-    let newBonusCardOption2 = document.createElement("option")
-    newBonusCardOption2.classList.add("bonus-card-option")
-    newBonusCardOption2.value = 2
-    newBonusCardOption2.textContent = workersList[2].name
+    if (worker1.name) {
+      let newBonusCardOption1 = document.createElement("option")
+      newBonusCardOption1.classList.add("bonus-card-option")
+      newBonusCardOption1.value = 1
+      newBonusCardOption1.textContent = workersList[1].name
+      bonusOptions.push(newBonusCardOption1)
+    }
 
-    let newBonusCardOption3 = document.createElement("option")
-    newBonusCardOption3.classList.add("bonus-card-option")
-    newBonusCardOption3.value = 3
-    newBonusCardOption3.textContent = workersList[3].name
+    if (worker2.name) {
+      let newBonusCardOption2 = document.createElement("option")
+      newBonusCardOption2.classList.add("bonus-card-option")
+      newBonusCardOption2.value = 2
+      newBonusCardOption2.textContent = workersList[2].name
+      bonusOptions.push(newBonusCardOption2)
+    }
 
-    let newBonusCardOption4 = document.createElement("option")
-    newBonusCardOption4.classList.add("bonus-card-option")
-    newBonusCardOption4.value = 4
-    newBonusCardOption4.textContent = workersList[4].name
+    if (worker3.name) {
+      let newBonusCardOption3 = document.createElement("option")
+      newBonusCardOption3.classList.add("bonus-card-option")
+      newBonusCardOption3.value = 3
+      newBonusCardOption3.textContent = workersList[3].name
+      bonusOptions.push(newBonusCardOption3)
+    }
 
-    // Массив сотрудником
-    let bonusOptions = [
-      newBonusCardOption0, 
-      newBonusCardOption1, 
-      newBonusCardOption2, 
-      newBonusCardOption3, 
-      newBonusCardOption4
-    ]
+    if (worker4.name) {
+      let newBonusCardOption4 = document.createElement("option")
+      newBonusCardOption4.classList.add("bonus-card-option")
+      newBonusCardOption4.value = 4
+      newBonusCardOption4.textContent = workersList[4].name
+      bonusOptions.push(newBonusCardOption4)
+    }
+
 
     // Кнопка передачи карточки
     let newBonusCardGiveButton = document.createElement("button")
