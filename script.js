@@ -302,6 +302,7 @@ const showCrowns = function() {
 // Карточки закончились ---------------------------------------------------------------------------
 
 const emptyDeckMessage = document.querySelector('.empty-deck-message')
+const emptyDeckMessageText = emptyDeckMessage.querySelector('.empty-deck-message__text')
 
 const checkCardDeck = function() {
   if (cards.length === 0) {
@@ -309,7 +310,7 @@ const checkCardDeck = function() {
     levelFields.forEach(element => {
       element.disabled = true
     });
-    emptyDeckMessage.classList.remove('hidden')
+    emptyDeckMessageText.classList.remove('hidden')
   }
 }
 
