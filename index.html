@@ -7,30 +7,54 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <button class="random-button" type="button">RANDOM</button>
-  <form class="admin-panel pushed-in" onsubmit="return false;">
-    <button class="admin-panel-button-move" type="button">
-      <img src="./images/downarr.png" class="admin-panel-button-image">
-    </button>
-    <select class="admin-panel-select" name="admin-panel-select" id="admin-panel-select">
-      <option class="admin-panel-option" value="" disabled selected></option>
-      <option class="admin-panel-option" value="0">Костиков Юрий</option>
-      <option class="admin-panel-option" value="1">Сапожников Евгений</option>
-      <option class="admin-panel-option" value="2">Шаров Алексей</option>
-      <option class="admin-panel-option" value="3">Кучукбаев Айдар</option>
-      <option class="admin-panel-option" value="4">Конев Михаил</option>
-    </select>
-    <input class="admin-panel-input" type="number">
-    <button class="admin-panel-button-submit" type="submit"></button>
-  </form>
+  <header class="header">
+    <div class="empty-deck-message ">
+      <p class="empty-deck-message__text">
+        Карточки закончились
+      </p>
+    </div>
+    <form class="admin-panel pushed-in" onsubmit="return false;">
+      <button class="admin-panel-button-move" type="button">
+        <img src="./images/downarr.png" class="admin-panel-button-image">
+      </button>
+      <select class="admin-panel-select" name="admin-panel-select" id="admin-panel-select">
+        <option class="admin-panel-option" value="" disabled selected></option>
+        <!-- <option class="admin-panel-option" value="0">Костиков Юрий</option>
+        <option class="admin-panel-option" value="1">Сапожников Евгений</option>
+        <option class="admin-panel-option" value="2">Шаров Алексей</option>
+        <option class="admin-panel-option" value="3">Кучукбаев Айдар</option>
+        <option class="admin-panel-option" value="4">Конев Михаил</option> -->
+      </select>
+      <input class="admin-panel-input" type="number">
+      <button class="admin-panel-button-submit" type="submit"></button>
+    </form>
+    <div class="pizza-box">
+      <div class="pizza-box__letter-box pizza-box__letter-box--closed">
+        <span class="pizza-box__letter">П</span>
+      </div>
+      <div class="pizza-box__letter-box pizza-box__letter-box--closed">
+        <span class="pizza-box__letter">И</span>
+      </div>
+      <div class="pizza-box__letter-box pizza-box__letter-box--closed">
+        <span class="pizza-box__letter">Ц</span>
+      </div>
+      <div class="pizza-box__letter-box pizza-box__letter-box--closed">
+        <span class="pizza-box__letter">Ц</span>
+      </div>
+      <div class="pizza-box__letter-box pizza-box__letter-box--closed">
+        <span class="pizza-box__letter">А</span>
+      </div>
+    </div>
+  </header> 
   <ul class="workers-list">
-    <li class="workers-list-worker">
+    <button class="random-button" type="button">RANDOM</button>
+    <!-- <li class="workers-list-worker">
       <div class="worker-crown hidden">
         <img src="./images/crown.png" class="crown">
       </div>
       <div class="worker-title">
         <span class="worker-name">Костиков Юрий</span>
-        <button class="worker-get-random-card-button" id="0" disabled>0</button>
+        <button class="worker-get-random-card-button" id="0" disabled>1</button>
         <div class="worker-rolls-bar hidden"></div>
       </div>
       <div class="progress">
@@ -42,7 +66,7 @@
           <span class="progress-next-level-value progress-text-inner">2100</span>
         </div>
       </div>
-      <ul class="workers-list-cards">
+      <ul class="workers-list-cards"> -->
         <!-- <li class="bonus-card" data-workerid="0">
           <span class="bonus-card-text">-300 позиций в инвентаризацию</span>
           <select class="bonus-card-select">
@@ -68,7 +92,7 @@
           </select>
           <button class="bonus-card-give-button bonus-card-button"></button>
           <button class="bonus-card-use-button bonus-card-button"></button>
-        </li> -->
+        </li>
       </ul>
     </li>
     <li class="workers-list-worker">
@@ -77,7 +101,7 @@
       </div>
       <div class="worker-title">
         <span class="worker-name">Сапожников Евгений</span>
-        <button class="worker-get-random-card-button" id="1" disabled>0</button>
+        <button class="worker-get-random-card-button" id="1" disabled>1</button>
         <div class="worker-rolls-bar hidden"></div>
       </div>
       <div class="progress">
@@ -98,7 +122,7 @@
       </div>
       <div class="worker-title">
         <span class="worker-name">Шаров Алексей</span>
-        <button class="worker-get-random-card-button" id="2" disabled>0</button>
+        <button class="worker-get-random-card-button" id="2" disabled>1</button>
         <div class="worker-rolls-bar hidden"></div>
       </div>
       <div class="progress">
@@ -119,7 +143,7 @@
       </div>
       <div class="worker-title">
         <span class="worker-name">Кучукбаев Айдар</span>
-        <button class="worker-get-random-card-button" id="3" disabled>0</button>
+        <button class="worker-get-random-card-button" id="3" disabled>1</button>
         <div class="worker-rolls-bar hidden"></div>
       </div>
       <div class="progress">
@@ -134,7 +158,7 @@
       <ul class="workers-list-cards">
       </ul>
     </li>
-    <li class="workers-list-worker">
+    <!-- <li class="workers-list-worker">
       <div class="worker-crown hidden">
         <img src="./images/crown.png" class="crown">
       </div>
@@ -154,7 +178,7 @@
       </div>
       <ul class="workers-list-cards">
       </ul>
-    </li>
+    </li> -->
   </ul>
 
 
