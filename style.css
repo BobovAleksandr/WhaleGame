@@ -53,9 +53,10 @@ button {
 
 .header {
   display: grid;
-  grid-template-columns: 1fr 278px 1fr;
+  grid-template-columns: 1fr 400px 1fr;
   width: 100%;
-  padding: 10px 0;
+  align-items: center;
+  padding: 5px 0;
 }
 
 .empty-deck-message {
@@ -86,31 +87,31 @@ button {
 .admin-panel {
   display: flex;
   position: relative;
-  gap: 4px;
-  padding: 4px;
-  width: 278px;
-  height: 30px;
+  gap: 6px;
+  padding: 6px;
+  width: 396px;
+  height: 44px;
   border-bottom-right-radius: 10px;
   border-bottom-left-radius: 10px;
   background-color: #587099;
   z-index: 1;
   top: 0;
-  transform: translateY(-10px);
+  transform: translateY(-5px);
   transition: transform 0.2s ease;
 }
 .admin-panel.pushed-in {
-  transform: translateY(-40px);
+  transform: translateY(-49px);
 }
 .admin-panel-button-move {
   position: absolute;
-  width: 46px;
-  height: 16px;
+  width: 54px;
+  height: 18px;
   border-bottom-right-radius: 10px;
   border-bottom-left-radius: 10px;
   background-color: #587099;
   z-index: 1;
-  top: 30px;
-  left: 116px;
+  top: 44px;
+  left: calc(50% - 27px);
   border: none;
 }
 .admin-panel-button-move:hover {
@@ -127,14 +128,14 @@ button {
   transform: rotate(180deg);
 }
 .admin-panel-select {
-  width: 186px;
-  padding: 2px 4px;
+  width: 240px;
+  padding: 2px 6px;
   background-color: #3F5576;
   border-radius: 7px;
   border: none;
   box-shadow: inset 0 3px 4px 0 rgba(0, 0, 0, 0.25);
   color: white;
-  font-size: 14px;
+  font-size: 20px;
   letter-spacing: 0.05em;
   line-height: 1em;
 }
@@ -142,14 +143,14 @@ button {
   outline: none;
 }
 .admin-panel-input {
-  width: 54px;
-  padding: 2px 4px;
+  width: 100px;
+  padding: 2px 6px;
   background-color: #3F5576;
   border-radius: 7px;
   border: none;
   box-shadow: inset 0 3px 4px 0 rgba(0, 0, 0, 0.25);
   color: white;
-  font-size: 14px;
+  font-size: 20px;
   letter-spacing: 0.05em;
   line-height: 1em;
 }
@@ -157,8 +158,8 @@ button {
   outline: none;
 }
 .admin-panel-button-submit {
-  width: 22px;
-  height: 22px;
+  width: 32px;
+  height: 32px;
   background-color: #3F5576;
   border-radius: 7px;
   background-image: url(./images/cross.svg);
@@ -212,7 +213,7 @@ button {
   position: relative;
   display: flex;
   width: 1860px;
-  height: 100%;
+  height: 100vh;
   padding: 60px 20px 20px;
   justify-content: center;
   align-items: flex-start;
