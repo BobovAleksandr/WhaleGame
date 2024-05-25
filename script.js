@@ -1,14 +1,54 @@
-const cards = [
-  {id: 0, value: 'Освобождение от разгрузки', isPassive: false},
-  {id: 1, value: 'Освобождение от дежурства', isPassive: false},
-  {id: 2, value: '-200 руб. за инвентаризацию', isPassive: true},
-  {id: 3, value: 'Освобождение от выставления', isPassive: false},
-  {id: 4, value: 'Освобождение от переоценки', isPassive: false},
-  {id: 5, value: 'Освобождение от уборки', isPassive: false},
-  {id: 6, value: '-200 руб. за неверные ценники', isPassive: true},
-  {id: 7, value: '-300 позиций в инвентаризацию', isPassive: true},
+let cards = [
+  {id: 0, value: 'Свобождение от разгрузки', isPassive: false},
+  {id: 1, value: 'Свобождение от разгрузки', isPassive: false},
+  {id: 2, value: 'Свобождение от разгрузки', isPassive: false},
+  {id: 3, value: 'Свобождение от разгрузки', isPassive: false},
+  {id: 4, value: 'Свобождение от разгрузки', isPassive: false},
+  {id: 5, value: 'Свобождение от разгрузки', isPassive: false},
+  {id: 6, value: 'Передать дежурство другому УСМ', isPassive: false},
+  {id: 7, value: 'Передать дежурство другому УСМ', isPassive: false},
   {id: 8, value: 'Передать дежурство другому УСМ', isPassive: false},
-  {id: 9, value: 'Передать поручение УМ', isPassive: false},
+  {id: 9, value: 'Передать дежурство другому УСМ', isPassive: false},
+  {id: 10, value: 'Передать дежурство другому УСМ', isPassive: false},
+  {id: 11, value: '-200 руб. за инвентаризацию', isPassive: true},
+  {id: 12, value: '-200 руб. за инвентаризацию', isPassive: true},
+  {id: 13, value: '-200 руб. за инвентаризацию', isPassive: true},
+  {id: 14, value: '-200 руб. за инвентаризацию', isPassive: true},
+  {id: 15, value: '-200 руб. за инвентаризацию', isPassive: true},
+  {id: 16, value: 'Освобождение от выставления', isPassive: false},
+  {id: 17, value: 'Освобождение от выставления', isPassive: false},
+  {id: 18, value: 'Освобождение от выставления', isPassive: false},
+  {id: 19, value: 'Освобождение от выставления', isPassive: false},
+  {id: 20, value: 'Освобождение от выставления', isPassive: false},
+  {id: 21, value: 'Освобождение от переоценки', isPassive: false},
+  {id: 22, value: 'Освобождение от переоценки', isPassive: false},
+  {id: 23, value: 'Освобождение от переоценки', isPassive: false},
+  {id: 24, value: 'Освобождение от переоценки', isPassive: false},
+  {id: 25, value: 'Освобождение от переоценки', isPassive: false},
+  {id: 26, value: 'Освобождение от уборки', isPassive: false},
+  {id: 27, value: 'Освобождение от уборки', isPassive: false},
+  {id: 28, value: 'Освобождение от уборки', isPassive: false},
+  {id: 29, value: 'Освобождение от уборки', isPassive: false},
+  {id: 30, value: 'Освобождение от уборки', isPassive: false},
+  {id: 31, value: '-200 руб. за неверные ценники', isPassive: true},
+  {id: 32, value: '-200 руб. за неверные ценники', isPassive: true},
+  {id: 33, value: '-200 руб. за неверные ценники', isPassive: true},
+  {id: 34, value: '-200 руб. за неверные ценники', isPassive: true},
+  {id: 35, value: '-200 руб. за неверные ценники', isPassive: true},
+  {id: 36, value: '-300 позиций в инвентаризацию', isPassive: true},
+  {id: 37, value: '-300 позиций в инвентаризацию', isPassive: true},
+  {id: 38, value: '-300 позиций в инвентаризацию', isPassive: true},
+  {id: 39, value: '-300 позиций в инвентаризацию', isPassive: true},
+  {id: 40, value: '-300 позиций в инвентаризацию', isPassive: true},
+  {id: 41, value: 'Передать дежурство другому УСМ', isPassive: false},
+  {id: 42, value: 'Передать дежурство другому УСМ', isPassive: false},
+  {id: 43, value: 'Передать дежурство другому УСМ', isPassive: false},
+  {id: 44, value: 'Передать дежурство другому УСМ', isPassive: false},
+  {id: 45, value: 'Передать дежурство другому УСМ', isPassive: false},
+  {id: 46, value: 'Передать поручение УМ', isPassive: false},
+  {id: 47, value: 'Передать поручение УМ', isPassive: false},
+  {id: 48, value: 'Передать поручение УМ', isPassive: false},
+  {id: 49, value: 'Передать поручение УМ', isPassive: false},
 ];
 
 let workersList = [
@@ -118,15 +158,6 @@ const expBrakpoints = [
   44600, // 18 лвл
   50100, // 19 лвл
   ]
-
-// Загрузка сотрудников из массива ----------------------------------------------------------------
-document.addEventListener('DOMContentLoaded', () => {
-  workersList.forEach(worker => {
-    drawWorker(worker.id)
-    checkCardDeck()
-  });
-})
-
 
 // Отрисовка карточки сотрудника ------------------------------------------------------------------
 let drawWorker = function(id) {
@@ -251,6 +282,7 @@ let drawWorker = function(id) {
   workerOption.value = id
   workerOption.textContent = workersList[id].name
   adminPanelSelect.appendChild(workerOption)
+  saveData()
 }
 
 // Получить ID сотрудника и количество опыта, 
@@ -336,12 +368,14 @@ const showBonusCard = function(workerId, bonusCard) {
   }
   currentChild.appendChild(newBonusCardGiveButton)
   currentChild.appendChild(newBonusCardUseButton)
+  saveData()
 }
 
 // Отрисовка уровня -------------------------------------------------------------------------------
 const showLevel = function(id) {
   let currentLevelField = document.querySelectorAll('.worker-get-random-card-button')[id]
   currentLevelField.textContent = workersList[id].level
+  saveData()
 }
 
 // Отрисовка прогресс-бара ------------------------------------------------------------------------
@@ -353,6 +387,7 @@ const showExp = function(id) {
   progressBarNextLevelValues[id].textContent = workersList[id].neededExpToNextLevel;
   let currentBarPercent = Math.round((+workersList[id].currentExpOfLevel / +workersList[id].neededExpToNextLevel) * 100)
   progressBars[id].style.width = currentBarPercent + '%'
+  saveData()
 }
 
 // Отрисовка доступных роллов ---------------------------------------------------------------------
@@ -364,20 +399,22 @@ const showRolls = function(id) {
     rollsBars[id].textContent = workersList[id].rolls
     getRandomButtons[id].disabled = false
   }
+  saveData()
 }
 
 // Отрисовка пассивных карточек -------------------------------------------------------------------
 let showPassiveCards = function(id, passiveCard) {
   const passiveCardsList = document.querySelectorAll('.passive-cards__list')[id]
 
-    let newPassiveCard = document.createElement('li')
-    newPassiveCard.classList.add('passive-cards__card')
-    passiveCardsList.appendChild(newPassiveCard)
+  let newPassiveCard = document.createElement('li')
+  newPassiveCard.classList.add('passive-cards__card')
+  passiveCardsList.appendChild(newPassiveCard)
 
-    let newPassiveCardValue = document.createElement('span')
-    newPassiveCardValue.classList.add('bonus-card__text')
-    newPassiveCardValue.textContent = passiveCard.value
-    newPassiveCard.appendChild(newPassiveCardValue)
+  let newPassiveCardValue = document.createElement('span')
+  newPassiveCardValue.classList.add('bonus-card__text')
+  newPassiveCardValue.textContent = passiveCard.value
+  newPassiveCard.appendChild(newPassiveCardValue)
+  saveData()
 }
 
 // Раскрытие списка пассивных карточек ------------------------------------------------------------
@@ -467,31 +504,44 @@ adminPanelButtonSubmit.addEventListener('click', () => {
 
 // Сохранение и загрузка --------------------------------------------------------------------------
 let saveData = function() {
-  localStorage.setItem("worker0", JSON.stringify(worker0))
-  // localStorage.setItem("worker1", JSON.stringify(worker1))
-  // localStorage.setItem("worker2", JSON.stringify(worker2))
-  // localStorage.setItem("worker3", JSON.stringify(worker3))
-  // localStorage.setItem("worker4", JSON.stringify(worker4))
-  console.log('data saved')
+  localStorage.setItem('workersList', JSON.stringify(workersList))
+  localStorage.setItem('cardsList', JSON.stringify(cards))
 }
 
-
 const loadData = function() {
-  let loadedWorker0 = JSON.parse(localStorage.getItem("worker0"))
-  // let loadedWorker1 = JSON.parse(localStorage.getItem("worker1"))
-  // let loadedWorker2 = JSON.parse(localStorage.getItem("worker2"))
-  // let loadedWorker3 = JSON.parse(localStorage.getItem("worker3"))
-  // let loadedWorker4 = JSON.parse(localStorage.getItem("worker4"))
-  if (loadedWorker0) {worker0 = loadedWorker0}
-  // worker1 = loadedWorker1
-  // worker2 = loadedWorker2
-  // worker3 = loadedWorker3
-  // worker4 = loadedWorker4
-  console.log(worker0)
-  // console.log(worker1)
-  // console.log(worker2)
-  // console.log(worker3)
-  // console.log(worker4)
+  if (JSON.parse(localStorage.getItem("workersList"))) {
+    workersList = JSON.parse(localStorage.getItem("workersList"))
+    cards = JSON.parse(localStorage.getItem("cardsList"))
+  }
+  workersList.forEach(worker => {
+    drawWorker(worker.id)
+    showLevel(worker.id)
+    showExp(worker.id)
+    showRolls(worker.id)
+  });
+  checkCardDeck()
+  showCrowns()
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  loadData()
+})
+
+// Очистка Local Storage --------------------------------------------------------------------------
+const clearLS = function() {
+  localStorage.clear('workersList')
+}
+
+// Ручная загрузка ------------------------------------------------------------------------------
+const load = function() {
+  workersList.forEach(worker => {
+    drawWorker(worker.id)
+    showLevel(worker.id)
+    showExp(worker.id)
+    showRolls(worker.id)
+    showCrowns()
+    checkCardDeck()
+  });
 }
 
 // Получить рандомную бонусную карту --------------------------------------------------------------
@@ -526,6 +576,7 @@ const getRandomBonusCard = function (currentWorkerId) {
     }
   } 
   checkCardDeck()
+  saveData()
 };
 
 
@@ -534,6 +585,15 @@ let openBonusCard = function() {
   let currentCardTextBlock = event.target
   let currentCard = currentCardTextBlock.parentNode
   let currentCardSelect = currentCard.querySelector('.bonus-card-select')
+
+  let allCardstextBlocksMoved = document.querySelectorAll('.moved-left')
+  allCardstextBlocksMoved.forEach(card => {
+    if (card !== currentCardTextBlock) {
+      card.classList.remove('moved-left')
+      card.classList.remove('moved-left-far')
+    }
+  });
+
   currentCardTextBlock.classList.toggle('moved-left')
   if (currentCardTextBlock.classList.contains('moved-left-far')) {
     currentCardTextBlock.classList.remove('moved-left-far')
@@ -541,6 +601,7 @@ let openBonusCard = function() {
       currentCardSelect.value = ''
     }
   }
+
 }
 
 // Сдвинуть дальше бонусную карту -----------------------------------------------------------------
@@ -550,7 +611,7 @@ let openWideBonusCard = function() {
   currentCardTextBlock.classList.toggle('moved-left-far')
 }
 
-// Использовать бонусную карту -------------------------------------------------------------------- ПОПРАВИТЬ
+// Использовать бонусную карту --------------------------------------------------------------------
 let useBonusCard = function() {
   let currentCard = event.target.parentElement
   let currentCardSpan = currentCard.querySelector('.bonus-card-text')
@@ -604,6 +665,7 @@ let useBonusCard = function() {
   //   letterFiveContainer.classList.remove('pizza-box__letter-box--closed')
   //   letterFiveContainer.classList.add('pizza-box__letter-box--opened')
   // }
+  saveData()
 }
 
 // Передать бонусную карту ------------------------------------------------------------------------ 
@@ -647,6 +709,7 @@ let giveBonusCard = function() {
       newCardOptions[i].textContent = workersList[currentWorkerId].name
     }
   }
+  saveData()
 }
 
 // Слушатели --------------------------------------------------------------------------------------

@@ -351,7 +351,8 @@ button {
 
 .expanded {
   width: calc(100% - 14px);
-  min-height: calc(100% - 14px);
+  height: -moz-max-content;
+  height: max-content;
 }
 
 .worker-title {
