@@ -68,7 +68,6 @@ button {
   left: 12px;
   top: 12px;
   z-index: 1;
-  padding-bottom: 5px;
 }
 .empty-deck-message__text {
   display: block;
@@ -80,7 +79,7 @@ button {
   text-align: center;
   font-size: 24px;
   color: white;
-  line-height: 0.6;
+  line-height: 0.7;
   padding: 5px;
 }
 
@@ -227,7 +226,9 @@ button {
   position: relative;
   background-color: #587099;
   padding: 44px 16px 16px;
-  flex: 0 0 348px;
+  flex: 1 1 348px;
+  min-width: 280px;
+  max-width: 348px;
   text-align: center;
   display: flex;
   align-items: center;
@@ -237,8 +238,120 @@ button {
 }
 .workers-list-cards {
   display: flex;
+  width: 100%;
   flex-direction: column;
   gap: 10px;
+}
+
+.passive-cards__container {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  z-index: 4;
+  left: 0;
+  top: 0;
+  width: 30px;
+  height: 30px;
+  margin: 7px;
+  background-color: #3F5576;
+  border-radius: 10px;
+  padding: 7px 14px 14px;
+  transition: all 0.1s ease;
+}
+.passive-cards__header {
+  position: relative;
+  z-index: 4;
+  gap: 10px;
+  overflow: hidden;
+}
+.passive-cards__open-button {
+  position: absolute;
+  border-radius: 10px;
+  left: 0;
+  top: 0;
+  width: 30px;
+  height: 30px;
+  background-color: transparent;
+  z-index: 5;
+  overflow: hidden;
+}
+.passive-cards__open-button::after {
+  position: absolute;
+  content: "";
+  height: 100%;
+  width: 100%;
+  left: 0;
+  top: 0;
+  background-color: transparent;
+  background-image: url(./images/list.svg);
+  background-repeat: no-repeat;
+  background-size: 80%;
+  background-position: center center;
+  z-index: 6;
+}
+.passive-cards__open-button:hover {
+  background-color: #2F3148;
+  cursor: pointer;
+}
+.passive-cards__open-button:active {
+  box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.25);
+}
+.passive-cards__close-button {
+  position: absolute;
+  border-radius: 10px;
+  left: 0;
+  top: 0;
+  width: 30px;
+  height: 30px;
+  background-color: transparent;
+  z-index: 5;
+}
+.passive-cards__close-button::after {
+  position: absolute;
+  content: "";
+  height: 100%;
+  width: 100%;
+  left: 0;
+  top: 0;
+  transform: rotate(45deg);
+  background-color: transparent;
+  background-image: url(./images/cross.svg);
+  background-repeat: no-repeat;
+  background-size: 80%;
+  background-position: center center;
+  z-index: 6;
+}
+.passive-cards__close-button:hover {
+  cursor: pointer;
+}
+.passive-cards__close-button:active {
+  box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.25);
+}
+.passive-cards__title {
+  text-align: center;
+  font-size: 20px;
+  overflow: hidden;
+}
+.passive-cards__list {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  overflow: hidden;
+}
+.passive-cards__card {
+  height: 35px;
+  overflow: hidden;
+  background-color: #8689AC;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+}
+
+.expanded {
+  width: calc(100% - 14px);
+  min-height: calc(100% - 14px);
 }
 
 .worker-title {
@@ -313,10 +426,11 @@ button {
 
 .bonus-card {
   position: relative;
-  width: 316px;
+  width: 100%;
   height: 35px;
   cursor: pointer;
   overflow: hidden;
+  border-radius: 10px;
 }
 .bonus-card:active {
   box-shadow: none;
@@ -338,12 +452,13 @@ button {
   -webkit-user-select: none;
      -moz-user-select: none;
           user-select: none;
+  white-space: nowrap;
 }
 .bonus-card-text.moved-left {
   transform: translateX(-80px);
 }
 .bonus-card-text.moved-left-far {
-  transform: translateX(-270px);
+  transform: translateX(-80%);
 }
 .bonus-card-text:hover {
   background-color: #71749A;
@@ -397,7 +512,7 @@ button {
 .bonus-card-select {
   position: absolute;
   padding-left: 8px;
-  left: 40px;
+  right: 90px;
   top: 0;
   width: 186px;
   height: 100%;
@@ -411,7 +526,7 @@ button {
 
 .progress {
   position: relative;
-  width: 316px;
+  width: 100%;
   height: 20px;
 }
 .progress-bg {

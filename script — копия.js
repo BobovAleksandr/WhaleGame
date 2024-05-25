@@ -1,11 +1,7 @@
-const getRandomButtons = document.querySelectorAll(".worker-get-random-card-button")
-
-let crownsId = document.querySelectorAll('.worker-crown')
-
 const cards = [
   "Освобождение от разгрузки",
   "Освобождение от дежурства",
-  "-200 руб. в инвентаризацию",
+  "-200 руб. в инвентаризацию",       // Пассивная
   "Освобождение от выставления",
   "Освобождение от переоценки",
   "Освобождение от уборки",
@@ -17,9 +13,12 @@ const cards = [
   "Освобождение от переоценки",
   "Освобождение от уборки",
   "-300 позиций в инвентаризацию",
+  "П",
+  "И",
+  "Ц",
+  "Ц",
+  "А",
 ];
-
-
 
 let workersList = [
   worker0 = {
@@ -31,6 +30,7 @@ let workersList = [
     level: 1,
     cards: [],
     usedCards: [],
+    passiveCards: [],
     isLeader: false,
     rolls: 0,
   },
@@ -44,6 +44,7 @@ let workersList = [
     level: 1,
     cards: [],
     usedCards: [],
+    passiveCards: [],
     isLeader: false,
     rolls: 0,
   },
@@ -57,43 +58,96 @@ let workersList = [
     level: 1,
     cards: [],
     usedCards: [],
+    passiveCards: [],
     isLeader: false,
     rolls: 0,
   },
 
   worker3 = {
     id: 3,
-    name: 'Кучкбаев Айдар',
+    name: 'Конев Михаил',
     exp: 0,
     currentExpOfLevel: 0,
     neededExpToNextLevel: 2100,
     level: 1,
     cards: [],
     usedCards: [],
+    passiveCards: [],
     isLeader: false,
     rolls: 0,
   },
 
   worker4 = {
     id: 4,
-    name: 'Конев Михаил', 
+    name: 'Кучукбаев Айдар', 
     exp: 0,
     currentExpOfLevel: 0,
     neededExpToNextLevel: 2100,
     level: 1,
     cards: [],
     usedCards: [],
+    passiveCards: [],
     isLeader: false,
     rolls: 0,
   },
+  // worker5 = {
+  //   id: 5,
+  //   name: 'Кружков Гена', 
+  //   exp: 0,
+  //   currentExpOfLevel: 0,
+  //   neededExpToNextLevel: 2100,
+  //   level: 1,
+  //   cards: [],
+  //   usedCards: [],
+  //   passiveCards: [],
+  //   isLeader: false,
+  //   rolls: 0,
+  // },
 ]
 
+// Загрузка сотрудников из массива ----------------------------------------------------------------
+
+// document.addEventListener('DOMContentLoaded', () => {
+//   workersList.forEach(element => {
+//     drawWorker(element.id)
+//     checkCardDeck()
+//   });
+// })
+
+// Отрисовка карточки сотрудника ------------------------------------------------------------------
 let drawWorker = function(id) {
   let workersNode = document.querySelector('.workers-list')
   
   let workerCard = document.createElement('li')
   workerCard.classList.add('workers-list-worker')
+  workerCard.id = id
   workersNode.appendChild(workerCard)
+
+  let passiveCardsContainer = document.createElement('div')
+  passiveCardsContainer.classList.add('passive-cards__container')
+  workerCard.appendChild(passiveCardsContainer)
+
+  let passiveCardsOpenButton = document.createElement('button')
+  passiveCardsOpenButton.classList.add('passive-cards__open-button')
+  passiveCardsContainer.appendChild(passiveCardsOpenButton)
+
+  let passiveCardsCloseButton = document.createElement('button')
+  passiveCardsCloseButton.classList.add('passive-cards__close-button')
+  passiveCardsCloseButton.classList.add('hidden')
+  passiveCardsContainer.appendChild(passiveCardsCloseButton)
+
+  let passiveCardsHeader = document.createElement('div')
+  passiveCardsHeader.classList.add('passive-cards__header')
+  passiveCardsContainer.appendChild(passiveCardsHeader)
+
+  let passiveCardsTitle = document.createElement('span')
+  passiveCardsTitle.classList.add('passive-cards__title')
+  passiveCardsTitle.textContent = 'Пассивные карточки'
+  passiveCardsHeader.appendChild(passiveCardsTitle)
+
+  let passiveCardsList = document.createElement('ul')
+  passiveCardsList.classList.add('passive-cards__list')
+  passiveCardsContainer.appendChild(passiveCardsList)
 
   let crownContainer = document.createElement('div')
   crownContainer.classList.add('worker-crown')
@@ -169,8 +223,14 @@ let drawWorker = function(id) {
   cardsList.classList.add('workers-list-cards')
   workerCard.appendChild(cardsList)
 
-}
+  let adminPanelSelect = document.querySelector('.admin-panel-select')
+  let workerOption = document.createElement('option')
+  workerOption.classList.add('admin-panel-option')
+  workerOption.value = id
+  workerOption.textContent = workersList[id].name
+  adminPanelSelect.appendChild(workerOption)
 
+}
 
 const expBrakpoints = [
 0,     // 1 лвл
@@ -194,7 +254,11 @@ const expBrakpoints = [
 50100, // 19 лвл
 ]
 
-// -------------------- Получить ID сотрудника и количество опыта, установить уровень сотрудника, значения опыта для прогресс-бара, количество доступных роллов --------------------
+// Получить ID сотрудника и количество опыта, 
+// установить уровень сотрудника, 
+// значения опыта для прогресс-бара, количество 
+// доступных роллов 
+// ------------------------------------------------------------------------------------------------
 let setWorkerLevel = function(workerId, expIncome) {
     workersList[workerId].exp += expIncome;
     let previousLevel = workersList[workerId].level
@@ -218,41 +282,69 @@ let setWorkerLevel = function(workerId, expIncome) {
     if (workersList[workerId].exp >= expBrakpoints[17]) {workersList[workerId].level = 19; workersList[workerId].neededExpToNextLevel = expBrakpoints[18] - expBrakpoints[17]; workersList[workerId].currentExpOfLevel = workersList[workerId].exp - expBrakpoints[17]}
     if (workersList[workerId].exp >= expBrakpoints[18]) {workersList[workerId].level = 20; workersList[workerId].neededExpToNextLevel = 999999}
     workersList[workerId].rolls = workersList[workerId].rolls + (workersList[workerId].level - previousLevel)
+    showLevel(workerId)
+    showExp(workerId)
+    showRolls(workerId)
+    showCrowns()
 }
 
-
-// -------------------- Загрузить значения опыта в прогресс-бар --------------------
-
-let progressBarCurrentValues = document.querySelectorAll('.progress-current-value')
-let progressBarNextLevelValues = document.querySelectorAll('.progress-next-level-value')
-let progressBars = document.querySelectorAll('.progress-bar')
-
-const getExpValues = function() {
-  workersList.forEach(element => {
-    progressBarCurrentValues[element.id].textContent = element.currentExpOfLevel;
-    progressBarNextLevelValues[element.id].textContent = element.neededExpToNextLevel;
-    let currentBarPercent = Math.round((+element.currentExpOfLevel / +element.neededExpToNextLevel) * 100)
-    progressBars[element.id].style.width = currentBarPercent + '%'
-  });
+// Отрисовка уровня -------------------------------------------------------------------------------
+const showLevel = function(id) {
+  let currentLevelField = document.querySelectorAll('.worker-get-random-card-button')[id]
+  currentLevelField.textContent = workersList[id].level
 }
 
-// -------------------- Загрузить роллы сотрудникам --------------------
-
-const rollsBars = document.querySelectorAll(".worker-rolls-bar")
-
-const getRolls = function() {
-  workersList.forEach(element => {
-    if (element.rolls > 0) {
-      rollsBars[element.id].classList.remove('hidden')
-      rollsBars[element.id].textContent = element.rolls
-      getRandomButtons[element.id].disabled = false
-    } 
-  });
+// Отрисовка прогресс-бара ------------------------------------------------------------------------
+const showExp = function(id) {
+  let progressBarCurrentValues = document.querySelectorAll('.progress-current-value')
+  let progressBarNextLevelValues = document.querySelectorAll('.progress-next-level-value')
+  let progressBars = document.querySelectorAll('.progress-bar')
+  progressBarCurrentValues[id].textContent = workersList[id].currentExpOfLevel;
+  progressBarNextLevelValues[id].textContent = workersList[id].neededExpToNextLevel;
+  let currentBarPercent = Math.round((+workersList[id].currentExpOfLevel / +workersList[id].neededExpToNextLevel) * 100)
+  progressBars[id].style.width = currentBarPercent + '%'
 }
 
+// Отрисовка доступных роллов ---------------------------------------------------------------------
+const showRolls = function(id) {
+  const getRandomButtons = document.querySelectorAll(".worker-get-random-card-button")
+  const rollsBars = document.querySelectorAll(".worker-rolls-bar")
+  if (workersList[id].rolls > 0 && cards.length > 0) {
+    rollsBars[id].classList.remove('hidden')
+    rollsBars[id].textContent = workersList[id].rolls
+    getRandomButtons[id].disabled = false
+  }
+}
 
-// -------------------- Загрузить короны для сотрудников с максимальным уровнем --------------------
-const getCrown = function() {
+// Отрисовка пассивных карточек -------------------------------------------------------------------
+let showPassiveCards = function(id) {
+
+}
+
+// Раскрытие списка пассивных карточек ------------------------------------------------------------
+let openPassiveCards = function() {
+  let currentCard = event.target.parentElement.parentElement
+  let currentContainer = currentCard.querySelector('.passive-cards__container')
+  currentContainer.classList.add('expanded')
+  event.target.classList.add('hidden')
+  let currentCoseButton = currentCard.querySelector('.passive-cards__close-button')
+  currentCoseButton.classList.remove('hidden')
+}
+
+// Закрытие списка пассивных карточек ------------------------------------------------------------
+let closePassiveCards = function() {
+  let currentCard = event.target.parentElement.parentElement
+  let currentContainer = currentCard.querySelector('.passive-cards__container')
+  currentContainer.classList.remove('expanded')
+
+  event.target.classList.add('hidden')
+  let currentCoseButton = currentCard.querySelector('.passive-cards__open-button')
+  currentCoseButton.classList.remove('hidden')
+}
+
+// Отрисовка корон --------------------------------------------------------------------------------
+const showCrowns = function() {
+  let crownsId = document.querySelectorAll('.worker-crown')
   let currentLevels = []
   for (i = 0; i < workersList.length; i++) {
     let levelIsNumber = Number(workersList[i].level)
@@ -262,17 +354,33 @@ const getCrown = function() {
   if (currentMaxLevel > 1) {
     workersList.forEach(element => {
       if (element.level === currentMaxLevel) {
-        crownsId[element.id].classList.remove('hidden')
         element.isLeader = true
-      } else {
-        crownsId[element.id].classList.add('hidden')
+        crownsId[element.id].classList.remove('hidden')
+      } 
+      else {
         element.isLeader = false
+        crownsId[element.id].classList.add('hidden')
       }
     })
   }
 }
 
-// -------------------- Админ панель --------------------
+// Карточки закончились ---------------------------------------------------------------------------
+const emptyDeckMessage = document.querySelector('.empty-deck-message')
+const emptyDeckMessageText = emptyDeckMessage.querySelector('.empty-deck-message__text')
+
+const checkCardDeck = function() {
+  if (cards.length === 0) {
+    let levelFields = document.querySelectorAll('.worker-get-random-card-button')
+    levelFields.forEach(element => {
+      element.disabled = true
+    });
+    emptyDeckMessageText.classList.remove('hidden')
+  }
+}
+
+
+// Админ панель -----------------------------------------------------------------------------------
 const adminPanel = document.querySelector('.admin-panel')
 const adminPanelButtonMove = document.querySelector('.admin-panel-button-move')
 const adminPanelButtonImage = document.querySelector('.admin-panel-button-image')
@@ -280,31 +388,25 @@ const adminPanelButtonSubmit = document.querySelector('.admin-panel-button-submi
 const adminPanelSelect = document.querySelector('.admin-panel-select')
 const adminPanelInput = document.querySelector('.admin-panel-input')
 
-
 // Открытие и закрытие панели
 adminPanelButtonMove.addEventListener('click', () => {
   adminPanel.classList.toggle('pushed-in')
   adminPanelButtonImage.classList.toggle('rotated')
   adminPanelSelect.value = ''
   adminPanelInput.value = ''
-  console.log('1')
 })
 
-// начисленеи опыта по нажатию кнопки и запуск функций
+// Начисленеи опыта по нажатию кнопки и запуск функций
 adminPanelButtonSubmit.addEventListener('click', () => {
   let selectedWorker = adminPanelSelect.value
   let gainedExp = Number(adminPanelInput.value)
   setWorkerLevel(selectedWorker, gainedExp)
   adminPanelSelect.value = ''
   adminPanelInput.value = ''
-  getExpValues()
-  getRolls()
-  getCrown()
-  loadLevels()
 })
 
 
-
+// Сохранение и загрузка --------------------------------------------------------------------------
 let saveData = function() {
   localStorage.setItem("worker0", JSON.stringify(worker0))
   // localStorage.setItem("worker1", JSON.stringify(worker1))
@@ -333,19 +435,12 @@ const loadData = function() {
   // console.log(worker4)
 }
 
-// -------------------- Загрузить уровни сотрудников на страницу --------------------
-const loadLevels = function() {
-  workersList.forEach(element => {
-    let currentId = element.id
-    getRandomButtons[currentId].textContent = workersList[currentId].level
-  });
-}
 
-
-// -------------------- Получить рандомную бонусную карту --------------------
+// Получить рандомную бонусную карту --------------------------------------------------------------
 const getRandomBonusCard = function (currentWorkerId) {
 
   if (workersList[currentWorkerId].rolls > 0) {
+    const rollsBars = document.querySelectorAll(".worker-rolls-bar")
     
     // Находим рандомно индекс карточки и её значение
     let currentCardIndex = Math.floor(Math.random() * cards.length);
@@ -365,54 +460,22 @@ const getRandomBonusCard = function (currentWorkerId) {
     let newBonusCardSelect = document.createElement("select")
     newBonusCardSelect.classList.add("bonus-card-select")
 
-    // Опция-плейсхолдер
+    // Опция-плейсхолдер в поле выбора передачи
     let newBonusCardOptionDisabled = document.createElement("option")
     newBonusCardSelect.classList.add("bonus-card-option")
     newBonusCardOptionDisabled.disabled = true
     newBonusCardOptionDisabled.selected = true
 
-    // Сотрудники
+    // Сотрудники в поле выбора передачи
     let bonusOptions = []
 
-    if (worker0.name) {
-      let newBonusCardOption0 = document.createElement("option")
-      newBonusCardOption0.classList.add("bonus-card-option")
-      newBonusCardOption0.value = 0
-      newBonusCardOption0.textContent = workersList[0].name
-      bonusOptions.push(newBonusCardOption0)
-    }
-
-    if (worker1.name) {
-      let newBonusCardOption1 = document.createElement("option")
-      newBonusCardOption1.classList.add("bonus-card-option")
-      newBonusCardOption1.value = 1
-      newBonusCardOption1.textContent = workersList[1].name
-      bonusOptions.push(newBonusCardOption1)
-    }
-
-    if (worker2.name) {
-      let newBonusCardOption2 = document.createElement("option")
-      newBonusCardOption2.classList.add("bonus-card-option")
-      newBonusCardOption2.value = 2
-      newBonusCardOption2.textContent = workersList[2].name
-      bonusOptions.push(newBonusCardOption2)
-    }
-
-    if (worker3.name) {
-      let newBonusCardOption3 = document.createElement("option")
-      newBonusCardOption3.classList.add("bonus-card-option")
-      newBonusCardOption3.value = 3
-      newBonusCardOption3.textContent = workersList[3].name
-      bonusOptions.push(newBonusCardOption3)
-    }
-
-    if (worker4.name) {
-      let newBonusCardOption4 = document.createElement("option")
-      newBonusCardOption4.classList.add("bonus-card-option")
-      newBonusCardOption4.value = 4
-      newBonusCardOption4.textContent = workersList[4].name
-      bonusOptions.push(newBonusCardOption4)
-    }
+    workersList.forEach(element => {
+      let newBonusCardOption = document.createElement("option")
+      newBonusCardOption.classList.add("bonus-card-option")
+      newBonusCardOption.value = element.id
+      newBonusCardOption.textContent = element.name
+      bonusOptions.push(newBonusCardOption)
+    });
 
     // Кнопка передачи карточки
     let newBonusCardGiveButton = document.createElement("button")
@@ -449,17 +512,17 @@ const getRandomBonusCard = function (currentWorkerId) {
     rollsBars[currentWorkerId].textContent = workersList[currentWorkerId].rolls
 
     // Если счётчик становится равен нулю прячем его и деактивируем кнопку
+    const getRandomButtons = document.querySelectorAll(".worker-get-random-card-button")
     if (workersList[currentWorkerId].rolls === 0) {
       rollsBars[currentWorkerId].classList.add('hidden')
       getRandomButtons[currentWorkerId].disabled = true
     }
   } 
-  // saveData()
+  checkCardDeck()
 };
 
 
-// -------------------- Сдвинуть бонусную карту --------------------
-
+// Сдвинуть бонусную карту ------------------------------------------------------------------------
 let openBonusCard = function() {
   let currentCardTextBlock = event.target
   let currentCard = currentCardTextBlock.parentNode
@@ -472,19 +535,16 @@ let openBonusCard = function() {
       currentCardSelect.value = ''
     }
   }
-    // saveData()
 }
 
-// -------------------- Сдвинуть дальше бонусную карту --------------------
-
+// Сдвинуть дальше бонусную карту -----------------------------------------------------------------
 let openWideBonusCard = function() {
   let currentCard = event.target.parentElement
   let currentCardTextBlock = currentCard.querySelector('.bonus-card-text')
   currentCardTextBlock.classList.toggle('moved-left-far')
 }
 
-// -------------------- Использовать бонусную карту --------------------
-
+// Использовать бонусную карту --------------------------------------------------------------------
 let useBonusCard = function() {
   let currentCard = event.target.parentElement
   let currentCardValue = currentCard.querySelector('.bonus-card-text').textContent
@@ -493,9 +553,43 @@ let useBonusCard = function() {
   currentCard.remove()
   workersList[currentWorkerId].usedCards.push(currentCardValue)
   workersList[currentWorkerId].cards.splice(indexOfWorkerCard, 1)
+
+  // Если пасивная
+  if (currentCardValue = '') {
+
+  }
+
+
+  // Если П.И.Ц.Ц.А.
+  if (currentCardValue === 'П') {
+    let letterOneContainer = document.querySelectorAll('.pizza-box__letter-box')[0]
+    letterOneContainer.classList.remove('pizza-box__letter-box--closed')
+    letterOneContainer.classList.add('pizza-box__letter-box--opened')
+  }
+  if (currentCardValue === 'И') {
+    let letterTwoContainer = document.querySelectorAll('.pizza-box__letter-box')[1]
+    letterTwoContainer.classList.remove('pizza-box__letter-box--closed')
+    letterTwoContainer.classList.add('pizza-box__letter-box--opened')
+  }
+  if (currentCardValue === 'Ц') {
+    let letterThreeContainer = document.querySelectorAll('.pizza-box__letter-box')[2]
+    let letterFourContainer = document.querySelectorAll('.pizza-box__letter-box')[3]
+    if (letterThreeContainer.classList.contains('pizza-box__letter-box--closed')) {
+      letterThreeContainer.classList.remove('pizza-box__letter-box--closed')
+      letterThreeContainer.classList.add('pizza-box__letter-box--opened')
+    } else {
+      letterFourContainer.classList.remove('pizza-box__letter-box--closed')
+      letterFourContainer.classList.add('pizza-box__letter-box--opened')
+    }
+  }
+  if (currentCardValue === 'А') {
+    let letterFiveContainer = document.querySelectorAll('.pizza-box__letter-box')[4]
+    letterFiveContainer.classList.remove('pizza-box__letter-box--closed')
+    letterFiveContainer.classList.add('pizza-box__letter-box--opened')
+  }
 }
 
-// -------------------- Передать бонусную карту --------------------
+// Передать бонусную карту ------------------------------------------------------------------------
 
 let giveBonusCard = function() {
   let currentSelect = event.target
@@ -533,7 +627,7 @@ let giveBonusCard = function() {
   }
 }
 
-// -------------------- Слушатели --------------------
+// Слушатели --------------------------------------------------------------------------------------
 
 document.addEventListener("click", function(event) {
   if (event.target.classList.contains("worker-get-random-card-button")) {
@@ -547,6 +641,12 @@ document.addEventListener("click", function(event) {
   }
   if (event.target.classList.contains("bonus-card-give-button")) {
     openWideBonusCard()
+  }
+  if (event.target.classList.contains("passive-cards__open-button")) {
+    openPassiveCards()
+  }
+  if (event.target.classList.contains("passive-cards__close-button")) {
+    closePassiveCards()
   }
 });
 
@@ -563,9 +663,5 @@ randomButton.addEventListener('click', () => {
     let id = element.id
     let exp = Math.round((Math.random() * 10000) + 3000)
     setWorkerLevel(id, exp)
-    getExpValues()
-    getRolls()
-    getCrown()
-    loadLevels()
   });
 })
