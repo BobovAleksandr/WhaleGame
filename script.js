@@ -65,8 +65,7 @@ let workersList = [
     isLeader: false,
     rolls: 0,
   },
-
-  worker1 = {
+  {
     id: 1,
     name: 'Сапожников Евгений',
     exp: 0,
@@ -79,8 +78,7 @@ let workersList = [
     isLeader: false,
     rolls: 0,
   },
-
-  worker2 = {
+  {
     id: 2,
     name: 'Шаров Алексей',
     exp: 0,
@@ -93,8 +91,7 @@ let workersList = [
     isLeader: false,
     rolls: 0,
   },
-
-  worker3 = {
+  {
     id: 3,
     name: 'Конев Михаил',
     exp: 0,
@@ -107,34 +104,6 @@ let workersList = [
     isLeader: false,
     rolls: 0,
   },
-
-  // worker4 = {
-  //   id: 4,
-  //   name: 'Кучукбаев Айдар', 
-  //   exp: 0,
-  //   currentExpOfLevel: 0,
-  //   neededExpToNextLevel: 2100,
-  //   level: 1,
-  //   cards: [],
-  //   usedCards: [],
-  //   passiveCards: [],
-  //   isLeader: false,
-  //   rolls: 0,
-  // },
-
-  // worker5 = {
-  //   id: 5,
-  //   name: 'Кружков Гена', 
-  //   exp: 0,
-  //   currentExpOfLevel: 0,
-  //   neededExpToNextLevel: 2100,
-  //   level: 1,
-  //   cards: [],
-  //   usedCards: [],
-  //   passiveCards: [],
-  //   isLeader: false,
-  //   rolls: 0,
-  // },
 ]
 
 const expBrakpoints = [
@@ -158,6 +127,32 @@ const expBrakpoints = [
   44600, // 18 лвл
   50100, // 19 лвл
   ]
+
+const addWorker = function(name) {
+  let newWorker = {
+    id: (workersList.length),
+    name: name,
+    exp: 0,
+    currentExpOfLevel: 0,
+    neededExpToNextLevel: 2100,
+    level: 1,
+    cards: [],
+    usedCards: [],
+    passiveCards: [],
+    isLeader: false,
+    rolls: 0,
+  }
+  workersList.push(newWorker)
+  saveData()
+  location.reload()
+}
+
+const deleteWorker = function(name) {
+  let deletingWorkerIndex = workersList.findIndex(worker => worker.name === name)
+  workersList.splice(deletingWorkerIndex, 1)
+  saveData()
+  location.reload()
+}
 
 // Отрисовка карточки сотрудника ------------------------------------------------------------------
 let drawWorker = function(id) {
@@ -791,9 +786,11 @@ document.addEventListener('change', function(event) {
 
 // Рандом -----------------------------------------------------------------------------------------
 const randomButton = document.querySelector('.random-button')
-randomButton.addEventListener('click', () => {
-  getRandom()
-})
+if (randomButton) {
+  randomButton.addEventListener('click', () => {
+    getRandom()
+  })
+}
 
 const getRandom = function() {
   workersList.forEach(worker => {
@@ -804,7 +801,6 @@ const getRandom = function() {
 }
 
 // Telegram бот -----------------------------------------------------------------------------------
-
 const TELEGRAM_BOT_TOKEN = '7060733985:AAEtTTUvLUYHGmNSCv_Euj6cET584NuWRd0';
 const TELEGRAM_CHAT_ID = '@DNSWhaleGame'
 const API = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`
