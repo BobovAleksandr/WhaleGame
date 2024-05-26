@@ -666,6 +666,7 @@ let useBonusCard = function() {
   //   letterFiveContainer.classList.add('pizza-box__letter-box--opened')
   // }
   saveData()
+  sendUseCardMessage(currentWorkerId, currentBonusCard)
 }
 
 // Передать бонусную карту ------------------------------------------------------------------------ 
@@ -749,3 +750,26 @@ randomButton.addEventListener('click', () => {
     setWorkerLevel(id, exp)
   });
 })
+
+const TELEGRAM_BOT_TOKEN = '7060733985:AAEtTTUvLUYHGmNSCv_Euj6cET584NuWRd0';
+const TELEGRAM_CHAT_ID = '@DNSWhaleGame'
+const API = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`
+
+let animalsPic = ['🐶', '🐵', '🐭', '🦊', '🐻', '🐷', '🦁', '🐯', '🐱', '🐹']
+
+async function sendUseCardMessage(workerId, card) {
+  let randomPic = animalsPic[Math.floor(Math.random() * animalsPic.length)]
+  try {
+    const response = await fetch(API, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        chat_id: TELEGRAM_CHAT_ID,
+        text: `${randomPic} ${workersList[workerId].name} использовал карту\n\n✅ ${card.value} ✅`
+      })
+    });
+  } catch (error) {
+  }
+}
