@@ -427,7 +427,7 @@ let openPassiveCards = function() {
   currentCoseButton.classList.remove('hidden')
 }
 
-// Закрытие списка пассивных карточек ------------------------------------------------------------
+// Закрытие списка пассивных карточек -------------------------------------------------------------
 let closePassiveCards = function() {
   let currentCard = event.target.parentElement.parentElement
   let currentContainer = currentCard.querySelector('.passive-cards__container')
@@ -484,12 +484,59 @@ const adminPanelButtonSubmit = document.querySelector('.admin-panel-button-submi
 const adminPanelSelect = document.querySelector('.admin-panel-select')
 const adminPanelInput = document.querySelector('.admin-panel-input')
 
+const adminPanelPasswordContainer = document.querySelector('.admin-panel-password')
+const adminPanelPasswordInput = document.querySelector('.admin-panel-password-input')
+const adminPanelPasswordButton = document.querySelector('.admin-panel-password-submit')
+
 // Открытие и закрытие панели
 adminPanelButtonMove.addEventListener('click', () => {
-  adminPanel.classList.toggle('pushed-in')
+  if ((adminPanelPasswordContainer.classList.contains('pushed-in') === true) && (adminPanel.classList.contains('pushed-in') === false)) {
+    adminPanel.classList.add('pushed-in')
+  } else if ((adminPanelPasswordContainer.classList.contains('pushed-in') === true) && (adminPanel.classList.contains('pushed-in') === true)) {
+    adminPanel.classList.remove('pushed-in')
+    adminPanelPasswordContainer.classList.remove('pushed-in')
+  } else if ((adminPanelPasswordContainer.classList.contains('pushed-in') === false) && (adminPanel.classList.contains('pushed-in') === false)) {
+    adminPanel.classList.add('pushed-in')
+    adminPanelPasswordContainer.classList.add('pushed-in')
+  }
+  adminPanelButtonMove.classList.toggle('pushed-in')
   adminPanelButtonImage.classList.toggle('rotated')
   adminPanelSelect.value = ''
   adminPanelInput.value = ''
+  adminPanelPasswordInput.value = ''
+})
+
+// Задать новый пароль
+let changePassword = function(newPass) {
+  adminPassword = newPass
+  localStorage.setItem('currentPassword', adminPassword)
+}
+
+// Если пароль не задан, то по умолчанию - "123456"
+if (!localStorage.getItem('currentPassword')) {
+  let adminPassword = 123456
+  localStorage.setItem('currentPassword', adminPassword)
+}
+
+// Ввод пароля
+adminPanelPasswordButton.addEventListener('click', () => {
+  let currentPassword = adminPanelPasswordInput.value
+  if (currentPassword === localStorage.getItem('currentPassword')) {
+    adminPanelPasswordContainer.classList.toggle('pushed-in')
+  } else {
+    let turnRed = function() {
+      adminPanelPasswordInput.classList.toggle('input-red')
+      adminPanelPasswordInput.placeholder = 'Пароль неверный'
+    }
+    turnRed()
+    setTimeout(() => {
+      turnRed()
+      adminPanelPasswordInput.placeholder = 'Введите пароль'
+    }, 1000);
+
+
+  }
+  adminPanelPasswordInput.value = ''
 })
 
 // Начисленеи опыта по нажатию кнопки и запуск функций
@@ -529,10 +576,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Очистка Local Storage --------------------------------------------------------------------------
 const clearLS = function() {
-  localStorage.clear('workersList')
+  localStorage.clear()
 }
 
-// Ручная загрузка ------------------------------------------------------------------------------
+// Ручная загрузка --------------------------------------------------------------------------------
 const load = function() {
   workersList.forEach(worker => {
     drawWorker(worker.id)
@@ -669,7 +716,7 @@ let useBonusCard = function() {
   sendUseCardMessage(currentWorkerId, currentBonusCard)
 }
 
-// Передать бонусную карту ------------------------------------------------------------------------ 
+// Передать бонусную карту ------------------------------------------------------------------------
 let giveBonusCard = function() {
   let currentSelect = event.target // select
   let currentCard = currentSelect.parentNode // li
@@ -742,14 +789,21 @@ document.addEventListener('change', function(event) {
   }
 })
 
+// Рандом -----------------------------------------------------------------------------------------
 const randomButton = document.querySelector('.random-button')
 randomButton.addEventListener('click', () => {
+  getRandom()
+})
+
+const getRandom = function() {
   workersList.forEach(worker => {
     let id = worker.id
     let exp = Math.round((Math.random() * 10000) + 3000)
     setWorkerLevel(id, exp)
   });
-})
+}
+
+// Telegram бот -----------------------------------------------------------------------------------
 
 const TELEGRAM_BOT_TOKEN = '7060733985:AAEtTTUvLUYHGmNSCv_Euj6cET584NuWRd0';
 const TELEGRAM_CHAT_ID = '@DNSWhaleGame'

@@ -85,7 +85,7 @@ button {
 
 .admin-panel {
   display: flex;
-  position: relative;
+  position: absolute;
   gap: 6px;
   padding: 6px;
   width: 396px;
@@ -95,11 +95,10 @@ button {
   background-color: #587099;
   z-index: 1;
   top: 0;
-  transform: translateY(-5px);
   transition: transform 0.2s ease;
 }
 .admin-panel.pushed-in {
-  transform: translateY(-49px);
+  transform: translateY(-44px);
 }
 .admin-panel-button-move {
   position: absolute;
@@ -112,9 +111,13 @@ button {
   top: 44px;
   left: calc(50% - 27px);
   border: none;
+  transition: transform 0.2s ease;
 }
 .admin-panel-button-move:hover {
   cursor: pointer;
+}
+.admin-panel-button-move.pushed-in {
+  transform: translateY(-44px);
 }
 .admin-panel-button-image {
   margin: 0 auto;
@@ -170,6 +173,68 @@ button {
   box-shadow: inset 0 3px 4px 0 rgba(0, 0, 0, 0.25);
 }
 .admin-panel-button-submit:active {
+  box-shadow: none;
+}
+
+.admin-panel-password {
+  position: absolute;
+  display: flex;
+  position: relative;
+  gap: 6px;
+  padding: 6px;
+  width: 396px;
+  height: 44px;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  background-color: #587099;
+  z-index: 1;
+  top: 0;
+  transform: translateY(-5px);
+  transition: transform 0.2s ease;
+}
+.admin-panel-password.pushed-in {
+  transform: translateY(-49px);
+}
+.admin-panel-password-input {
+  width: 346px;
+  padding: 2px 6px;
+  background-color: #3F5576;
+  border-radius: 7px;
+  border: none;
+  box-shadow: inset 0 3px 4px 0 rgba(0, 0, 0, 0.25);
+  color: white;
+  font-size: 20px;
+  letter-spacing: 0.05em;
+  line-height: 1em;
+}
+.admin-panel-password-input.input-red {
+  border: 1px solid red;
+}
+.admin-panel-password-input:focus-visible {
+  outline: none;
+}
+.admin-panel-password-input::-moz-placeholder {
+  color: rgba(214, 214, 214, 0.3411764706);
+  font-style: italic;
+}
+.admin-panel-password-input::placeholder {
+  color: rgba(214, 214, 214, 0.3411764706);
+  font-style: italic;
+}
+.admin-panel-password-submit {
+  width: 32px;
+  height: 32px;
+  background-color: #3F5576;
+  border-radius: 7px;
+  background-image: url(./images/cross.svg);
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+.admin-panel-password-submit:hover {
+  cursor: pointer;
+  box-shadow: inset 0 3px 4px 0 rgba(0, 0, 0, 0.25);
+}
+.admin-panel-password-submit:active {
   box-shadow: none;
 }
 

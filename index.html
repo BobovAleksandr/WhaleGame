@@ -13,21 +13,27 @@
         Карточки закончились
       </p>
     </div>
-    <form class="admin-panel pushed-in" onsubmit="return false;">
-      <button class="admin-panel-button-move" type="button">
+    <div class="admin-panel-container">
+      <button class="admin-panel-button-move pushed-in" type="button">
         <img src="./images/downarr.png" class="admin-panel-button-image">
       </button>
-      <select class="admin-panel-select" name="admin-panel-select" id="admin-panel-select">
-        <option class="admin-panel-option" value="" disabled selected></option>
-        <!-- <option class="admin-panel-option" value="0">Костиков Юрий</option>
-        <option class="admin-panel-option" value="1">Сапожников Евгений</option>
-        <option class="admin-panel-option" value="2">Шаров Алексей</option>
-        <option class="admin-panel-option" value="3">Кучукбаев Айдар</option>
-        <option class="admin-panel-option" value="4">Конев Михаил</option> -->
-      </select>
-      <input class="admin-panel-input" type="number">
-      <button class="admin-panel-button-submit" type="submit"></button>
-    </form>
+      <form class="admin-panel pushed-in" onsubmit="return false">
+        <select class="admin-panel-select" name="admin-panel-select" id="admin-panel-select">
+          <!-- <option class="admin-panel-option" value="" disabled selected></option>
+          <option class="admin-panel-option" value="0">Костиков Юрий</option>
+          <option class="admin-panel-option" value="1">Сапожников Евгений</option>
+          <option class="admin-panel-option" value="2">Шаров Алексей</option>
+          <option class="admin-panel-option" value="3">Кучукбаев Айдар</option>
+          <option class="admin-panel-option" value="4">Конев Михаил</option> -->
+        </select>
+        <input class="admin-panel-input" type="number">
+        <button class="admin-panel-button-submit" type="submit"></button>
+      </form>
+      <form class="admin-panel-password pushed-in" onsubmit="return false">
+        <input class="admin-panel-password-input" type="password" placeholder="Введите пароль">
+        <button class="admin-panel-password-submit" type="submit"></button>
+      </form>
+    </div>
     <div class="pizza-box">
       <div class="pizza-box__letter-box pizza-box__letter-box--closed">
         <span class="pizza-box__letter">П</span>
