@@ -3,10 +3,49 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>DNS Кит / Бонусы</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="./images/faw.png" type="image/x-icon">
 </head>
 <body>
+  <dialog class="workers-modal">
+    <div class="workers-modal__title-container">
+      <h2 class="workers-modal__title">Введите имена сотрудников</h2>
+    </div>
+    <form class="workers-modal__form" onsubmit="return false">
+      <ul class="workers-modal__list">
+        <!-- <li class="workers-modal__item">
+          <input type="text" class="workers-modal__input">
+          <button class="workers-modal__button--remove" type="button"></button>
+        </li> -->
+        <!-- <li class="workers-modal__item hidden">
+          <input type="text" class="workers-modal__input">
+          <button class="workers-modal__button--remove" type="button"></button>
+        </li>
+        <li class="workers-modal__item hidden">
+          <input type="text" class="workers-modal__input">
+          <button class="workers-modal__button--remove" type="button"></button>
+        </li>
+        <li class="workers-modal__item hidden">
+          <input type="text" class="workers-modal__input">
+          <button class="workers-modal__button--remove" type="button"></button>
+        </li>
+        <li class="workers-modal__item hidden">
+          <input type="text" class="workers-modal__input">
+          <button class="workers-modal__button--remove" type="button"></button>
+        </li>
+        <li class="workers-modal__item hidden"></button>
+          <input type="text" class="workers-modal__input">
+          <button class="workers-modal__button--remove" type="button"></button>
+        </li> -->
+      </ul>
+      <div class="workers-modal__button-container">
+        <button class="workers-modal__button--add" type="button"></button>
+        <button class="workers-modal__cancel hidden" type="button">Отмена</button>
+        <button class="workers-modal__submit" type="submit">Готово</button>
+      </div>
+    </form>
+  </dialog>
   <header class="header">
     <div class="empty-deck-message">
       <p class="empty-deck-message__text hidden">

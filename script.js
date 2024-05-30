@@ -52,58 +52,58 @@ let cards = [
 ];
 
 let workersList = [
-  worker0 = {
-    id: 0,
-    name: 'Костиков Юрий',
-    exp: 0,
-    currentExpOfLevel: 0,
-    neededExpToNextLevel: 2100,
-    level: 1,
-    cards: [],
-    usedCards: [],
-    passiveCards: [],
-    isLeader: false,
-    rolls: 0,
-  },
-  {
-    id: 1,
-    name: 'Сапожников Евгений',
-    exp: 0,
-    currentExpOfLevel: 0,
-    neededExpToNextLevel: 2100,
-    level: 1,
-    cards: [],
-    usedCards: [],
-    passiveCards: [],
-    isLeader: false,
-    rolls: 0,
-  },
-  {
-    id: 2,
-    name: 'Шаров Алексей',
-    exp: 0,
-    currentExpOfLevel: 0,
-    neededExpToNextLevel: 2100,
-    level: 1,
-    cards: [],
-    usedCards: [],
-    passiveCards: [],
-    isLeader: false,
-    rolls: 0,
-  },
-  {
-    id: 3,
-    name: 'Конев Михаил',
-    exp: 0,
-    currentExpOfLevel: 0,
-    neededExpToNextLevel: 2100,
-    level: 1,
-    cards: [],
-    usedCards: [],
-    passiveCards: [],
-    isLeader: false,
-    rolls: 0,
-  },
+  // worker0 = {
+  //   id: 0,
+  //   name: 'Костиков Юрий',
+  //   exp: 0,
+  //   currentExpOfLevel: 0,
+  //   neededExpToNextLevel: 2100,
+  //   level: 1,
+  //   cards: [],
+  //   usedCards: [],
+  //   passiveCards: [],
+  //   isLeader: false,
+  //   rolls: 0,
+  // },
+  // {
+  //   id: 1,
+  //   name: 'Сапожников Евгений',
+  //   exp: 0,
+  //   currentExpOfLevel: 0,
+  //   neededExpToNextLevel: 2100,
+  //   level: 1,
+  //   cards: [],
+  //   usedCards: [],
+  //   passiveCards: [],
+  //   isLeader: false,
+  //   rolls: 0,
+  // },
+  // {
+  //   id: 2,
+  //   name: 'Шаров Алексей',
+  //   exp: 0,
+  //   currentExpOfLevel: 0,
+  //   neededExpToNextLevel: 2100,
+  //   level: 1,
+  //   cards: [],
+  //   usedCards: [],
+  //   passiveCards: [],
+  //   isLeader: false,
+  //   rolls: 0,
+  // },
+  // {
+  //   id: 3,
+  //   name: 'Конев Михаил',
+  //   exp: 0,
+  //   currentExpOfLevel: 0,
+  //   neededExpToNextLevel: 2100,
+  //   level: 1,
+  //   cards: [],
+  //   usedCards: [],
+  //   passiveCards: [],
+  //   isLeader: false,
+  //   rolls: 0,
+  // },
 ]
 
 const expBrakpoints = [
@@ -128,9 +128,9 @@ const expBrakpoints = [
   50100, // 19 лвл
   ]
 
-const addWorker = function(name) {
+const addWorker = function(name, array) {
   let newWorker = {
-    id: (workersList.length),
+    id: (array.length),
     name: name,
     exp: 0,
     currentExpOfLevel: 0,
@@ -142,9 +142,9 @@ const addWorker = function(name) {
     isLeader: false,
     rolls: 0,
   }
-  workersList.push(newWorker)
+  array.push(newWorker)
   saveData()
-  location.reload()
+  // location.reload()
 }
 
 const deleteWorker = function(name) {
@@ -528,8 +528,6 @@ adminPanelPasswordButton.addEventListener('click', () => {
       turnRed()
       adminPanelPasswordInput.placeholder = 'Введите пароль'
     }, 1000);
-
-
   }
   adminPanelPasswordInput.value = ''
 })
@@ -543,6 +541,26 @@ adminPanelButtonSubmit.addEventListener('click', () => {
   adminPanelInput.value = ''
 })
 
+// Закрытие админки при клике мимо неё
+const adminPanelContainer = document.querySelector('.admin-panel-container')
+
+document.addEventListener('click', (event) => {
+  if (event.target !== adminPanelButtonMove) {
+    const modalRect = adminPanelContainer.getBoundingClientRect();
+    if (
+      event.clientX < modalRect.left ||
+      event.clientX > modalRect.right ||
+      event.clientY < modalRect.top ||
+      event.clientY > modalRect.bottom
+    ) {
+      console.log('ssssssssssss')
+
+      
+      // adminPanelContainer.close();
+    }
+  }
+})
+
 
 // Сохранение и загрузка --------------------------------------------------------------------------
 let saveData = function() {
@@ -554,6 +572,9 @@ const loadData = function() {
   if (JSON.parse(localStorage.getItem("workersList"))) {
     workersList = JSON.parse(localStorage.getItem("workersList"))
     cards = JSON.parse(localStorage.getItem("cardsList"))
+  } else {
+    workersModal.showModal()
+    getModalContent()
   }
   workersList.forEach(worker => {
     drawWorker(worker.id)
@@ -567,6 +588,7 @@ const loadData = function() {
 
 document.addEventListener('DOMContentLoaded', () => {
   loadData()
+  loadTg()
 })
 
 // Очистка Local Storage --------------------------------------------------------------------------
@@ -591,25 +613,19 @@ const getRandomBonusCard = function (currentWorkerId) {
 
   if (workersList[currentWorkerId].rolls > 0) {
     const rollsBars = document.querySelectorAll(".worker-rolls-bar")
-    
     // Находим рандомно индекс карточки и её значение
     let randomNumber = Math.floor(Math.random() * cards.length);
     let currentBonusCard = cards.find(card => cards.indexOf(card) === randomNumber)
-
-    // Отисовываем карту
+    // Отрисовываем карту
     showBonusCard(currentWorkerId, currentBonusCard)
-
     // Удаляем из списка карточек вышедшую
     let currentCardIndex = cards.indexOf(currentBonusCard)
     cards.splice(currentCardIndex, 1);
-
     // Добавляем вышедшую карту в объект сотрудника
     workersList[currentWorkerId].cards.push(currentBonusCard);
-
     // Убавляем счётчик роллов
     workersList[currentWorkerId].rolls--
     rollsBars[currentWorkerId].textContent = workersList[currentWorkerId].rolls
-
     // Если счётчик становится равен нулю прячем его и деактивируем кнопку
     const getRandomButtons = document.querySelectorAll(".worker-get-random-card-button")
     if (workersList[currentWorkerId].rolls === 0) {
@@ -620,7 +636,6 @@ const getRandomBonusCard = function (currentWorkerId) {
   checkCardDeck()
   saveData()
 };
-
 
 // Сдвинуть бонусную карту ------------------------------------------------------------------------
 let openBonusCard = function() {
@@ -643,7 +658,6 @@ let openBonusCard = function() {
       currentCardSelect.value = ''
     }
   }
-
 }
 
 // Сдвинуть дальше бонусную карту -----------------------------------------------------------------
@@ -756,7 +770,6 @@ let giveBonusCard = function() {
 }
 
 // Слушатели --------------------------------------------------------------------------------------
-
 document.addEventListener("click", function(event) {
   if (event.target.classList.contains("worker-get-random-card-button")) {
     getRandomBonusCard(event.target.id);
@@ -801,11 +814,33 @@ const getRandom = function() {
 }
 
 // Telegram бот -----------------------------------------------------------------------------------
-const TELEGRAM_BOT_TOKEN = '7060733985:AAEtTTUvLUYHGmNSCv_Euj6cET584NuWRd0';
-const TELEGRAM_CHAT_ID = '@DNSWhaleGame'
-const API = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`
+const setTelegramBotInfo = function(token, chatLink) {
+  localStorage.setItem('telegramToken', token)
+  localStorage.setItem('telegramChatLink', chatLink)
+  location.reload()
+  let TELEGRAM_BOT_TOKEN
+  let TELEGRAM_CHAT_ID
+  let API
+}
+
+const loadTg = () => {
+  if (localStorage.getItem('telegramToken')) {
+    TELEGRAM_BOT_TOKEN = localStorage.getItem('telegramToken')
+    API = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`
+  }
+  
+  if (localStorage.getItem('telegramChatLink')) {
+    TELEGRAM_CHAT_ID = localStorage.getItem('telegramChatLink');
+  }
+}
+
+
+// let TELEGRAM_BOT_TOKEN = '7060733985:AAEtTTUvLUYHGmNSCv_Euj6cET584NuWRd0';
+// let TELEGRAM_CHAT_ID = '@DNSWhaleGame'
+
 
 let animalsPic = ['🐶', '🐵', '🐭', '🦊', '🐻', '🐷', '🦁', '🐯', '🐱', '🐹']
+
 
 async function sendUseCardMessage(workerId, card) {
   let randomPic = animalsPic[Math.floor(Math.random() * animalsPic.length)]
@@ -822,4 +857,133 @@ async function sendUseCardMessage(workerId, card) {
     });
   } catch (error) {
   }
+}
+
+
+// Модальное окно на старте -----------------------------------------------------------------------
+let workersModal = document.querySelector('.workers-modal')
+let workersModalList = document.querySelector('.workers-modal__list')
+let workersModalButtonAdd = document.querySelector('.workers-modal__button--add')
+let workersModalButtonsRemove = document.querySelectorAll('.workers-modal__button--remove')
+let workersModalSubmit = document.querySelector('.workers-modal__submit')
+let workersModalCancel = document.querySelector('.workers-modal__cancel')
+
+// Заполнить модальное окно input'ами
+let getModalContent = function(name) {
+  let workersModalItems = document.querySelectorAll('.workers-modal__item')
+  if (workersModalItems.length < 6) {
+    let newWorkersListItem = document.createElement('li')
+    newWorkersListItem.classList.add('workers-modal__item')
+    workersModalList.appendChild(newWorkersListItem)
+    let newWorkersListInput = document.createElement('input')
+    newWorkersListInput.classList.add('workers-modal__input')
+    newWorkersListInput.type = "text"
+    if (name) {
+      newWorkersListInput.value = name
+    }
+    newWorkersListItem.appendChild(newWorkersListInput)
+    let newWorkersListButton = document.createElement('button')
+    newWorkersListButton.classList.add('workers-modal__button--remove')
+    newWorkersListButton.type = "button"
+    newWorkersListItem.appendChild(newWorkersListButton)
+  }
+  checkLastRemoveButton()
+}
+
+// При нажатии на "+" добавляется input
+workersModalButtonAdd.addEventListener('click', () => {
+  getModalContent()
+  checkLastRemoveButton()
+})
+
+// Если input один, то у него не отображается кнопка "-"
+let checkLastRemoveButton = function() {
+  let workersModalItems = document.querySelectorAll('.workers-modal__item')
+  if (workersModalItems.lenght > 0) {
+    let currentRemoveButton = workersModalItems[0].querySelector('.workers-modal__button--remove')
+    if (workersModalItems.length == 1) {
+      currentRemoveButton.classList.add('hidden')
+    } else {
+      currentRemoveButton.classList.remove('hidden')
+    }
+  }
+}
+
+// При нажатии на "-" удаляется этот же input
+document.addEventListener('click', (event) => {
+  let workersModalItems = document.querySelectorAll('.workers-modal__item')
+  if (event.target.classList.contains('workers-modal__button--remove')) {
+    let currentItem = event.target.parentElement
+    if (workersModalItems.length > 1) {
+      currentItem.remove()
+    }
+  }
+  checkLastRemoveButton()
+})
+
+// Нажатие отмены
+workersModalCancel.addEventListener('click', (event) => {
+  if (workersList.length == '') {
+    showModal()
+  } else {
+    workersModal.close()
+  }
+})
+
+// Закрытие модального окна при клике на backdrop
+workersModal.addEventListener('click', (event) => {
+  const modalRect = workersModal.getBoundingClientRect();
+  if (
+    event.clientX < modalRect.left ||
+    event.clientX > modalRect.right ||
+    event.clientY < modalRect.top ||
+    event.clientY > modalRect.bottom
+  ) {
+    workersModal.close();
+  }
+})
+
+// При нажатии "Готово" создается массив с именами сотрудников
+workersModalSubmit.addEventListener("click", (event) => {
+  let newWorkersList = []
+  event.preventDefault();
+
+  // Для каждого заполненного input'a создаём сотрудника или сохраняем текущего
+  let workersModalInputs = document.querySelectorAll(".workers-modal__input");
+  workersModalInputs.forEach((input) => {
+    if (input.value) {
+      let existingWorker = workersList.find(worker => worker.name === input.value)
+      if (existingWorker) {
+        newWorkersList.push(existingWorker)
+      } else {
+        addWorker(input.value, newWorkersList)
+      }
+      workersModal.close();
+      location.reload()
+    } 
+  });
+  // Обнуляем список сотрудников
+  workersList.length = 0
+  // Перезаполняем список сотрудников
+  for (i = 0; i < newWorkersList.length; i++) {
+    newWorkersList[i].id = i
+    workersList.push(newWorkersList[i])
+  }
+  saveData()
+});
+
+// Запрещаем закрывать модальное окно через Esc
+workersModal.addEventListener('cancel', (event) => {
+  event.preventDefault();
+})
+
+// При вызове модального окна загружаем имена сотрудников в input'ы
+let showModal = function() {
+  workersModalList.innerHTML = ''
+  workersList.forEach(worker => {
+    getModalContent(worker.name)
+  });
+  workersModalCancel.classList.remove('hidden')
+  checkLastRemoveButton()
+  workersModal.showModal()
 }

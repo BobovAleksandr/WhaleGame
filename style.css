@@ -631,6 +631,149 @@ button {
   margin-right: 250px;
 }
 
+h2 {
+  padding: 0;
+  margin: 0;
+  font-weight: normal;
+}
+
+.workers-modal {
+  width: 420px;
+  border-radius: 15px;
+  background-color: #587099;
+  border: none;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+}
+.workers-modal:focus-visible {
+  border: none;
+  outline: none;
+}
+.workers-modal::backdrop {
+  background-color: rgba(0, 0, 0, 0.7529411765);
+}
+.workers-modal__title-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 40px;
+  margin-bottom: 20px;
+}
+.workers-modal__title {
+  font-size: 26px;
+  color: white;
+  text-align: center;
+}
+.workers-modal__list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+.workers-modal__item {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+.workers-modal__button-container {
+  justify-content: center;
+  padding-right: 56px;
+  display: flex;
+  gap: 20px;
+}
+.workers-modal__button--add {
+  width: 36px;
+  height: 36px;
+  background-color: #3F5576;
+  border-radius: 7px;
+  background-image: url(./images/cross.svg);
+  background-repeat: no-repeat;
+  background-position: center center;
+  left: 0;
+}
+.workers-modal__button--add:hover {
+  cursor: pointer;
+  box-shadow: inset 0 3px 4px 0 rgba(0, 0, 0, 0.25);
+}
+.workers-modal__button--add:active {
+  box-shadow: none;
+}
+.workers-modal__button--add:focus-visible {
+  border: none;
+  outline: none;
+}
+.workers-modal__button--remove {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  background-color: rgba(0, 0, 0, 0);
+  border-radius: 7px;
+  background-image: url(./images/minus.svg);
+  background-position: center center;
+  background-size: 75%;
+  right: 52px;
+}
+.workers-modal__button--remove:hover {
+  cursor: pointer;
+  box-shadow: inset 0 3px 4px 0 rgba(0, 0, 0, 0.25);
+}
+.workers-modal__button--remove:active {
+  box-shadow: none;
+}
+.workers-modal__button--remove:focus-visible {
+  border: none;
+  outline: none;
+}
+.workers-modal__input {
+  width: 276px;
+  height: 32px;
+  padding: 2px 6px;
+  background-color: #3F5576;
+  border-radius: 7px;
+  border: none;
+  box-shadow: inset 0 3px 4px 0 rgba(0, 0, 0, 0.25);
+  color: white;
+  font-size: 20px;
+  letter-spacing: 0.05em;
+  line-height: 1em;
+}
+.workers-modal__input:focus-visible {
+  outline: none;
+}
+.workers-modal__submit {
+  width: 120px;
+  background-color: #3F5576;
+  border-radius: 7px;
+  color: white;
+  font-size: 20px;
+  padding: 5px 25px;
+}
+.workers-modal__submit:hover {
+  cursor: pointer;
+  box-shadow: inset 0 3px 4px 0 rgba(0, 0, 0, 0.25);
+}
+.workers-modal__submit:active {
+  box-shadow: none;
+}
+.workers-modal__cancel {
+  width: 120px;
+  background-color: #3F5576;
+  border-radius: 7px;
+  color: white;
+  font-size: 20px;
+  padding: 5px 25px;
+}
+.workers-modal__cancel:hover {
+  cursor: pointer;
+  box-shadow: inset 0 3px 4px 0 rgba(0, 0, 0, 0.25);
+}
+.workers-modal__cancel:active {
+  box-shadow: none;
+}
+
 .hidden {
   display: none;
 }/*# sourceMappingURL=style.css.map */
