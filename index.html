@@ -46,11 +46,37 @@
       </div>
     </form>
   </dialog>
+  <dialog class="telegram-modal">
+    <div class="telegram-modal__title-container">
+      <h2 class="telegram-modal__title">Введите токен telegram-бота и ссылку на telegram-чат</h2>
+    </div>
+    <form class="telegram-modal__form" onsubmit="return false">
+      <ul class="telegram-modal__list">
+        <li class="telegram-modal__item">
+          <input type="text" class="telegram-modal__input telegram-modal__input--token" placeholder="API">
+        </li>
+        <li class="telegram-modal__item">
+          <input type="text" class="telegram-modal__input telegram-modal__input--chat" placeholder="@ChatName">
+        </li>
+      </ul>
+      <div class="telegram-modal__button-container">
+        <button class="telegram-modal__cancel" type="button">Отмена</button>
+        <button class="telegram-modal__submit" type="submit">Готово</button>
+      </div>
+    </form>
+  </dialog>
   <header class="header">
     <div class="empty-deck-message">
       <p class="empty-deck-message__text hidden">
         Карточки закончились
       </p>
+    </div>
+    <div class="settings-panel pushed-in pushed-in-far">
+      <button class="settings-panel-button-move" type="button">
+        <img src="./images/downarr.png" class="settings-panel-button-image">
+      </button>
+      <button class="settings-panel-workers" type="button"></button>
+      <button class="settings-panel-telegram" type="button"></button>
     </div>
     <div class="admin-panel-container">
       <button class="admin-panel-button-move pushed-in" type="button">

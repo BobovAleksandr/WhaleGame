@@ -1,0 +1,95 @@
+.settings-panel
+  position: relative
+  height: 44px
+  display: flex
+  gap: 6px
+  padding: 6px
+  background-color: $color2
+  top: -5px
+  border-bottom-right-radius: 10px
+  border-bottom-left-radius: 10px
+  justify-self: center
+  transition: transform 0.2s ease
+
+  &.pushed-in
+    transform: translateY(-44px)
+
+  &.pushed-in-far
+    transform: translateY(-60px)
+
+  &-button-move
+    position: absolute
+    width: 40px
+    height: 16px
+    border-bottom-right-radius: 10px
+    border-bottom-left-radius: 10px
+    background-color: $color2
+    z-index: 1
+    top: 44px
+    left: calc(50% - 20px)
+    border: none
+    transition: transform 0.2s ease
+    
+    &:hover
+      cursor: pointer
+
+    &.pushed-in
+      transform: translateY(-44px)
+
+  &-button-image
+    margin: 0 auto
+    width: 16px
+    height: 16px
+    pointer-events: none
+    transition: transform 0.2s ease
+
+    &.rotated
+      transform: rotate(180deg)
+
+  &-workers
+    width: 32px
+    height: 32px
+    background-color: $color1
+    border-radius: 7px
+    background-image: url(./images/worker.svg)
+    background-size: 80%
+    background-repeat: no-repeat
+    background-position: center center
+
+    &:hover
+      cursor: pointer
+      box-shadow: inset 0 3px 4px 0 rgba(0, 0, 0, 0.25)
+
+    &:active
+      box-shadow: none
+
+    &:focus-visible
+      outline: none
+
+  &-telegram
+    width: 32px
+    height: 32px
+    background-color: $color1
+    border-radius: 7px
+    background-image: url(./images/telegram.svg)
+    background-repeat: no-repeat
+    background-size: 90%
+    background-position: center center
+
+    &:hover
+      cursor: pointer
+      box-shadow: inset 0 3px 4px 0 rgba(0, 0, 0, 0.25)
+
+    &:active
+      box-shadow: none
+
+    &:focus-visible
+      outline: none
+
+  
+
+
+
+
+
+

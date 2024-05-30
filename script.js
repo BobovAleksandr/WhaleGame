@@ -487,12 +487,16 @@ const adminPanelPasswordButton = document.querySelector('.admin-panel-password-s
 adminPanelButtonMove.addEventListener('click', () => {
   if ((adminPanelPasswordContainer.classList.contains('pushed-in') === true) && (adminPanel.classList.contains('pushed-in') === false)) {
     adminPanel.classList.add('pushed-in')
+    settingsPanel.classList.add('pushed-in-far')
+    settingsPanel.classList.add('pushed-in')
   } else if ((adminPanelPasswordContainer.classList.contains('pushed-in') === true) && (adminPanel.classList.contains('pushed-in') === true)) {
     adminPanel.classList.remove('pushed-in')
     adminPanelPasswordContainer.classList.remove('pushed-in')
   } else if ((adminPanelPasswordContainer.classList.contains('pushed-in') === false) && (adminPanel.classList.contains('pushed-in') === false)) {
     adminPanel.classList.add('pushed-in')
     adminPanelPasswordContainer.classList.add('pushed-in')
+    settingsPanel.classList.add('pushed-in-far')
+    settingsPanel.classList.add('pushed-in')
   }
   adminPanelButtonMove.classList.toggle('pushed-in')
   adminPanelButtonImage.classList.toggle('rotated')
@@ -518,6 +522,7 @@ adminPanelPasswordButton.addEventListener('click', () => {
   let currentPassword = adminPanelPasswordInput.value
   if (currentPassword === localStorage.getItem('currentPassword')) {
     adminPanelPasswordContainer.classList.toggle('pushed-in')
+    settingsPanel.classList.remove('pushed-in-far')
   } else {
     let turnRed = function() {
       adminPanelPasswordInput.classList.toggle('input-red')
@@ -541,24 +546,41 @@ adminPanelButtonSubmit.addEventListener('click', () => {
   adminPanelInput.value = ''
 })
 
-// Закрытие админки при клике мимо неё
-const adminPanelContainer = document.querySelector('.admin-panel-container')
+// Закрытие админки при клике мимо неё ------------- НЕ РАБОТАЕТ
+// const adminPanelContainer = document.querySelector('.admin-panel-container')
 
-document.addEventListener('click', (event) => {
-  if (event.target !== adminPanelButtonMove) {
-    const modalRect = adminPanelContainer.getBoundingClientRect();
-    if (
-      event.clientX < modalRect.left ||
-      event.clientX > modalRect.right ||
-      event.clientY < modalRect.top ||
-      event.clientY > modalRect.bottom
-    ) {
-      console.log('ssssssssssss')
+// document.addEventListener('click', (event) => {
+//   if (event.target !== adminPanelButtonMove) {
+//     const modalRect = adminPanelContainer.getBoundingClientRect();
+//     if (
+//       event.clientX < modalRect.left ||
+//       event.clientX > modalRect.right ||
+//       event.clientY < modalRect.top ||
+//       event.clientY > modalRect.bottom
+//     ) {
+//       console.log('s')
+//     }
+//   }
+// })
 
-      
-      // adminPanelContainer.close();
-    }
-  }
+// Панель настроек --------------------------------------------------------------------------------
+const settingsPanel = document.querySelector('.settings-panel')
+const settingsPanelButtonMove = document.querySelector('.settings-panel-button-move')
+const settingsPanelButtonImage = document.querySelector('.settings-panel-button-image')
+const settingsPanelButtonWorkers = document.querySelector('.settings-panel-workers')
+const settingsPanelButtonTelegram = document.querySelector('.settings-panel-telegram')
+
+settingsPanelButtonMove.addEventListener('click', () => {
+  settingsPanel.classList.toggle('pushed-in')
+  settingsPanelButtonImage.classList.toggle('rotated')
+})
+
+settingsPanelButtonWorkers.addEventListener('click', () => {
+  showWorkersModal()
+})
+
+settingsPanelButtonTelegram.addEventListener('click', () => {
+  showTelegramModal()
 })
 
 
@@ -574,6 +596,9 @@ const loadData = function() {
     cards = JSON.parse(localStorage.getItem("cardsList"))
   } else {
     workersModal.showModal()
+    workersModal.addEventListener('cancel', (event) => {
+      event.preventDefault();
+    })
     getModalContent()
   }
   workersList.forEach(worker => {
@@ -813,54 +838,7 @@ const getRandom = function() {
   });
 }
 
-// Telegram бот -----------------------------------------------------------------------------------
-const setTelegramBotInfo = function(token, chatLink) {
-  localStorage.setItem('telegramToken', token)
-  localStorage.setItem('telegramChatLink', chatLink)
-  location.reload()
-  let TELEGRAM_BOT_TOKEN
-  let TELEGRAM_CHAT_ID
-  let API
-}
-
-const loadTg = () => {
-  if (localStorage.getItem('telegramToken')) {
-    TELEGRAM_BOT_TOKEN = localStorage.getItem('telegramToken')
-    API = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`
-  }
-  
-  if (localStorage.getItem('telegramChatLink')) {
-    TELEGRAM_CHAT_ID = localStorage.getItem('telegramChatLink');
-  }
-}
-
-
-// let TELEGRAM_BOT_TOKEN = '7060733985:AAEtTTUvLUYHGmNSCv_Euj6cET584NuWRd0';
-// let TELEGRAM_CHAT_ID = '@DNSWhaleGame'
-
-
-let animalsPic = ['🐶', '🐵', '🐭', '🦊', '🐻', '🐷', '🦁', '🐯', '🐱', '🐹']
-
-
-async function sendUseCardMessage(workerId, card) {
-  let randomPic = animalsPic[Math.floor(Math.random() * animalsPic.length)]
-  try {
-    const response = await fetch(API, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        chat_id: TELEGRAM_CHAT_ID,
-        text: `${randomPic} ${workersList[workerId].name} использовал карту\n\n✅ ${card.value} ✅`
-      })
-    });
-  } catch (error) {
-  }
-}
-
-
-// Модальное окно на старте -----------------------------------------------------------------------
+// Модальное окно с настройками сотрудников -------------------------------------------------------
 let workersModal = document.querySelector('.workers-modal')
 let workersModalList = document.querySelector('.workers-modal__list')
 let workersModalButtonAdd = document.querySelector('.workers-modal__button--add')
@@ -924,7 +902,7 @@ document.addEventListener('click', (event) => {
 // Нажатие отмены
 workersModalCancel.addEventListener('click', (event) => {
   if (workersList.length == '') {
-    showModal()
+    showWorkersModal()
   } else {
     workersModal.close()
   }
@@ -972,13 +950,8 @@ workersModalSubmit.addEventListener("click", (event) => {
   saveData()
 });
 
-// Запрещаем закрывать модальное окно через Esc
-workersModal.addEventListener('cancel', (event) => {
-  event.preventDefault();
-})
-
 // При вызове модального окна загружаем имена сотрудников в input'ы
-let showModal = function() {
+let showWorkersModal = function() {
   workersModalList.innerHTML = ''
   workersList.forEach(worker => {
     getModalContent(worker.name)
@@ -986,4 +959,79 @@ let showModal = function() {
   workersModalCancel.classList.remove('hidden')
   checkLastRemoveButton()
   workersModal.showModal()
+}
+
+// Модальное окно с настройками telegram ----------------------------------------------------------
+let telegramModal = document.querySelector('.telegram-modal')
+let telegramInputToken = document.querySelector('.telegram-modal__input--token')
+let telegramInputChat = document.querySelector('.telegram-modal__input--chat')
+let telegramSubmit = document.querySelector('.telegram-modal__submit')
+let telegramCancel = document.querySelector('.telegram-modal__cancel')
+let TELEGRAM_BOT_TOKEN
+let TELEGRAM_CHAT_ID
+let API
+
+// Показ модального окна
+let showTelegramModal = function() {
+  telegramModal.showModal()
+}
+
+// Закрытие при нажатии "Отмена"
+telegramCancel.addEventListener('click', () => {
+  telegramModal.close()
+  telegramInputToken.value = ''
+  telegramInputChat.value = ''
+})
+
+// Передача значений input'ов
+telegramSubmit.addEventListener('click', () => {
+  if (telegramInputToken.value && telegramInputChat.value) {
+    TELEGRAM_BOT_TOKEN = telegramInputToken.value
+    TELEGRAM_CHAT_ID = telegramInputChat.value
+    telegramModal.close()
+    console.log(TELEGRAM_BOT_TOKEN)
+    console.log(TELEGRAM_CHAT_ID)
+    setTelegramBotInfo(TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID)
+    location.reload()
+  }
+})
+
+
+// Telegram бот -----------------------------------------------------------------------------------
+const setTelegramBotInfo = function(token, chatLink) {
+  localStorage.setItem('telegramToken', token)
+  localStorage.setItem('telegramChatLink', chatLink)
+}
+
+// TELEGRAM_BOT_TOKEN = '7060733985:AAEtTTUvLUYHGmNSCv_Euj6cET584NuWRd0';
+// TELEGRAM_CHAT_ID = '@DNSWhaleGame'
+
+const loadTg = () => {
+  if (localStorage.getItem('telegramToken')) {
+    TELEGRAM_BOT_TOKEN = localStorage.getItem('telegramToken')
+    API = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`
+  }
+  
+  if (localStorage.getItem('telegramChatLink')) {
+    TELEGRAM_CHAT_ID = localStorage.getItem('telegramChatLink');
+  }
+}
+
+let animalsPic = ['🐶', '🐵', '🐭', '🦊', '🐻', '🐷', '🦁', '🐯', '🐱', '🐹']
+
+async function sendUseCardMessage(workerId, card) {
+  let randomPic = animalsPic[Math.floor(Math.random() * animalsPic.length)]
+  try {
+    const response = await fetch(API, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        chat_id: TELEGRAM_CHAT_ID,
+        text: `${randomPic} ${workersList[workerId].name} использовал карту\n\n✅ ${card.value} ✅`
+      })
+    });
+  } catch (error) {
+  }
 }
