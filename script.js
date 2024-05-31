@@ -616,7 +616,7 @@ const loadData = function() {
       event.preventDefault();
     })
     getModalContent()
-  }
+  } 
   workersList.forEach(worker => {
     drawWorker(worker.id)
     showLevel(worker.id)
