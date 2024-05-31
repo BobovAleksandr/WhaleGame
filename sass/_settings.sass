@@ -1,3 +1,6 @@
+.tooltip
+  display: none
+  
 .settings-panel
   position: relative
   height: 44px
@@ -50,6 +53,7 @@
       transform: rotate(180deg)
 
   &-workers
+    position: relative
     width: 32px
     height: 32px
     background-color: $color1
@@ -69,7 +73,32 @@
     &:focus-visible
       outline: none
 
+    &:hover .tooltip
+      display: block
+      z-index: 2
+      position: absolute
+      width: 100px
+      background-color: red
+      left: 50%
+      transform: translate(-50%)
+      top: 46px
+      background-color: white
+      padding: 2px
+      border-radius: 5px
+      cursor: default
+
+      &::before
+        content: '▲'
+        position: absolute
+        z-index: 2
+        top: -19px
+        left: 50%
+        transform: translate(-50%)
+        color: white
+        font-size: 18px
+
   &-telegram
+    position: relative
     width: 32px
     height: 32px
     background-color: $color1
@@ -89,7 +118,32 @@
     &:focus-visible
       outline: none
 
+    &:hover .tooltip
+      display: block
+      z-index: 2
+      position: absolute
+      width: 100px
+      background-color: red
+      left: 50%
+      transform: translate(-50%)
+      top: 46px
+      background-color: white
+      padding: 2px
+      border-radius: 5px
+      cursor: default
+
+      &::before
+        content: '▲'
+        position: absolute
+        z-index: 2
+        top: -19px
+        left: 50%
+        transform: translate(-50%)
+        color: white
+        font-size: 18px
+
   &-erase
+    position: relative
     width: 32px
     height: 32px
     background-color: $color1
@@ -109,7 +163,32 @@
     &:focus-visible
       outline: none
 
+    &:hover .tooltip
+      display: block
+      z-index: 2
+      position: absolute
+      width: 100px
+      background-color: red
+      left: 50%
+      transform: translate(-50%)
+      top: 46px
+      background-color: white
+      padding: 2px
+      border-radius: 5px
+      cursor: default
+
+      &::before
+        content: '▲'
+        position: absolute
+        z-index: 2
+        top: -19px
+        left: 50%
+        transform: translate(-50%)
+        color: white
+        font-size: 18px
+
   &-password
+    position: relative
     width: 32px
     height: 32px
     background-color: $color1
@@ -129,6 +208,31 @@
     &:focus-visible
       outline: none
 
+    &:hover .tooltip
+      display: block
+      z-index: 2
+      position: absolute
+      width: 100px
+      background-color: red
+      left: 50%
+      transform: translate(-50%)
+      top: 46px
+      background-color: white
+      padding: 2px
+      border-radius: 5px
+      cursor: default
+
+      &::before
+        content: '▲'
+        position: absolute
+        z-index: 2
+        top: -19px
+        left: 50%
+        transform: translate(-50%)
+        color: white
+        font-size: 18px
+  
+  
   
 
 

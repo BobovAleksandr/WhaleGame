@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @font-face {
   font-family: DNS-Black;
   src: url(./fonts/DNSfont-Black.otf);
@@ -49,6 +50,10 @@ input::-webkit-inner-spin-button {
 
 button {
   border: none;
+}
+
+.tooltip {
+  display: none;
 }
 
 .settings-panel {
@@ -103,6 +108,7 @@ button {
   transform: rotate(180deg);
 }
 .settings-panel-workers {
+  position: relative;
   width: 32px;
   height: 32px;
   background-color: #3F5576;
@@ -122,7 +128,32 @@ button {
 .settings-panel-workers:focus-visible {
   outline: none;
 }
+.settings-panel-workers:hover .tooltip {
+  display: block;
+  z-index: 2;
+  position: absolute;
+  width: 100px;
+  background-color: red;
+  left: 50%;
+  transform: translate(-50%);
+  top: 46px;
+  background-color: white;
+  padding: 2px;
+  border-radius: 5px;
+  cursor: default;
+}
+.settings-panel-workers:hover .tooltip::before {
+  content: "▲";
+  position: absolute;
+  z-index: 2;
+  top: -19px;
+  left: 50%;
+  transform: translate(-50%);
+  color: white;
+  font-size: 18px;
+}
 .settings-panel-telegram {
+  position: relative;
   width: 32px;
   height: 32px;
   background-color: #3F5576;
@@ -142,7 +173,32 @@ button {
 .settings-panel-telegram:focus-visible {
   outline: none;
 }
+.settings-panel-telegram:hover .tooltip {
+  display: block;
+  z-index: 2;
+  position: absolute;
+  width: 100px;
+  background-color: red;
+  left: 50%;
+  transform: translate(-50%);
+  top: 46px;
+  background-color: white;
+  padding: 2px;
+  border-radius: 5px;
+  cursor: default;
+}
+.settings-panel-telegram:hover .tooltip::before {
+  content: "▲";
+  position: absolute;
+  z-index: 2;
+  top: -19px;
+  left: 50%;
+  transform: translate(-50%);
+  color: white;
+  font-size: 18px;
+}
 .settings-panel-erase {
+  position: relative;
   width: 32px;
   height: 32px;
   background-color: #3F5576;
@@ -162,7 +218,32 @@ button {
 .settings-panel-erase:focus-visible {
   outline: none;
 }
+.settings-panel-erase:hover .tooltip {
+  display: block;
+  z-index: 2;
+  position: absolute;
+  width: 100px;
+  background-color: red;
+  left: 50%;
+  transform: translate(-50%);
+  top: 46px;
+  background-color: white;
+  padding: 2px;
+  border-radius: 5px;
+  cursor: default;
+}
+.settings-panel-erase:hover .tooltip::before {
+  content: "▲";
+  position: absolute;
+  z-index: 2;
+  top: -19px;
+  left: 50%;
+  transform: translate(-50%);
+  color: white;
+  font-size: 18px;
+}
 .settings-panel-password {
+  position: relative;
   width: 32px;
   height: 32px;
   background-color: #3F5576;
@@ -181,6 +262,30 @@ button {
 }
 .settings-panel-password:focus-visible {
   outline: none;
+}
+.settings-panel-password:hover .tooltip {
+  display: block;
+  z-index: 2;
+  position: absolute;
+  width: 100px;
+  background-color: red;
+  left: 50%;
+  transform: translate(-50%);
+  top: 46px;
+  background-color: white;
+  padding: 2px;
+  border-radius: 5px;
+  cursor: default;
+}
+.settings-panel-password:hover .tooltip::before {
+  content: "▲";
+  position: absolute;
+  z-index: 2;
+  top: -19px;
+  left: 50%;
+  transform: translate(-50%);
+  color: white;
+  font-size: 18px;
 }
 
 .workers-modal {
@@ -260,7 +365,7 @@ button {
   background-image: url(./images/minus.svg);
   background-position: center center;
   background-size: 75%;
-  right: 52px;
+  right: 30px;
 }
 .workers-modal__button--remove:hover {
   cursor: pointer;
@@ -274,7 +379,7 @@ button {
   outline: none;
 }
 .workers-modal__input {
-  width: 276px;
+  width: 320px;
   height: 32px;
   padding: 2px 6px;
   background-color: #3F5576;
@@ -1218,4 +1323,8 @@ h2 {
 
 .input-red {
   border: 1px solid red;
+}
+
+.font-smaller {
+  font-size: 15px;
 }/*# sourceMappingURL=style.css.map */

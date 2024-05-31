@@ -470,7 +470,6 @@ const checkCardDeck = function() {
   }
 }
 
-
 // Админ панель -----------------------------------------------------------------------------------
 const adminPanel = document.querySelector('.admin-panel')
 const adminPanelButtonMove = document.querySelector('.admin-panel-button-move')
@@ -631,7 +630,21 @@ const loadData = function() {
 document.addEventListener('DOMContentLoaded', () => {
   loadData()
   loadTg()
+  changeFontSize()
 })
+
+let changeFontSize = function() {
+  let bonusCardsTextArray = document.querySelectorAll(".bonus-card-text");
+  if (workersList.length === 6) {
+    bonusCardsTextArray.forEach((element) => {
+      element.classList.add("font-smaller");
+    });
+  } else {
+    bonusCardsTextArray.forEach((element) => {
+      element.classList.remove("font-smaller");
+    });
+  }
+};
 
 // Очистка Local Storage --------------------------------------------------------------------------
 const clearLS = function() {
@@ -1149,7 +1162,7 @@ async function sendUseCardMessage(workerId, card) {
       },
       body: JSON.stringify({
         chat_id: TELEGRAM_CHAT_ID,
-        text: `${randomPic} ${workersList[workerId].name} использовал карту\n\n✅ ${card.value} ✅`
+        text: `${randomPic} ${workersList[workerId].name} использовал карту\n\n✅ ${card.value}`
       })
     });
   } catch (error) {
