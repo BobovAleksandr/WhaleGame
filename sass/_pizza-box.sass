@@ -1,0 +1,31 @@
+.pizza-box
+  justify-self: end
+  width: 195px
+  right: 10px
+  top: 10px
+  display: flex
+  gap: 5px
+  z-index: 1
+
+  &__letter-box
+    width: 35px
+    height: 35px
+    border-radius: 10px
+    display: flex
+    justify-content: center
+    align-items: center
+    user-select: none
+
+    &--opened
+      background-color: $color2
+      color: white
+
+    &--closed
+      border: 1px dashed $color2
+      background-color: $color1
+      color: $color1
+
+  &__letter
+    font-size: 30px
+    text-align: center
+    padding-bottom: 4px
