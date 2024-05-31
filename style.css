@@ -89,6 +89,9 @@ button {
 .settings-panel-button-move.pushed-in {
   transform: translateY(-44px);
 }
+.settings-panel-button-move:focus-visible {
+  outline: none;
+}
 .settings-panel-button-image {
   margin: 0 auto;
   width: 16px;
@@ -137,6 +140,46 @@ button {
   box-shadow: none;
 }
 .settings-panel-telegram:focus-visible {
+  outline: none;
+}
+.settings-panel-erase {
+  width: 32px;
+  height: 32px;
+  background-color: #3F5576;
+  border-radius: 7px;
+  background-image: url(./images/skull.svg);
+  background-repeat: no-repeat;
+  background-size: 80%;
+  background-position: center center;
+}
+.settings-panel-erase:hover {
+  cursor: pointer;
+  box-shadow: inset 0 3px 4px 0 rgba(0, 0, 0, 0.25);
+}
+.settings-panel-erase:active {
+  box-shadow: none;
+}
+.settings-panel-erase:focus-visible {
+  outline: none;
+}
+.settings-panel-password {
+  width: 32px;
+  height: 32px;
+  background-color: #3F5576;
+  border-radius: 7px;
+  background-image: url(./images/password.svg);
+  background-repeat: no-repeat;
+  background-size: 82%;
+  background-position: 73% center;
+}
+.settings-panel-password:hover {
+  cursor: pointer;
+  box-shadow: inset 0 3px 4px 0 rgba(0, 0, 0, 0.25);
+}
+.settings-panel-password:active {
+  box-shadow: none;
+}
+.settings-panel-password:focus-visible {
   outline: none;
 }
 
@@ -378,6 +421,214 @@ button {
   box-shadow: none;
 }
 
+.erase-modal {
+  z-index: 10;
+  width: 720px;
+  border-radius: 15px;
+  background-color: #587099;
+  border: none;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+}
+.erase-modal:focus-visible {
+  border: none;
+  outline: none;
+}
+.erase-modal::backdrop {
+  background-color: rgba(0, 0, 0, 0.9058823529);
+}
+.erase-modal__text-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 30px;
+}
+.erase-modal__text {
+  font-size: 20px;
+  color: white;
+  text-align: center;
+}
+.erase-modal__text--big {
+  font-size: 26px;
+}
+.erase-modal__list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+.erase-modal__item {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+.erase-modal__button-container {
+  justify-content: center;
+  display: flex;
+  gap: 20px;
+}
+.erase-modal__input {
+  width: 276px;
+  height: 32px;
+  padding: 2px 6px;
+  background-color: #3F5576;
+  border-radius: 7px;
+  border: none;
+  box-shadow: inset 0 3px 4px 0 rgba(0, 0, 0, 0.25);
+  color: white;
+  font-size: 20px;
+  letter-spacing: 0.05em;
+  line-height: 1em;
+}
+.erase-modal__input:focus-visible {
+  outline: none;
+}
+.erase-modal__input::-moz-placeholder {
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.2941176471);
+}
+.erase-modal__input::placeholder {
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.2941176471);
+}
+.erase-modal__button-container {
+  display: flex;
+  justify-content: center;
+}
+.erase-modal__submit {
+  width: 120px;
+  background-color: #3F5576;
+  border-radius: 7px;
+  color: white;
+  font-size: 20px;
+  padding: 5px 25px;
+}
+.erase-modal__submit:hover {
+  cursor: pointer;
+  box-shadow: inset 0 3px 4px 0 rgba(0, 0, 0, 0.25);
+}
+.erase-modal__submit:active {
+  box-shadow: none;
+}
+.erase-modal__cancel {
+  width: 120px;
+  background-color: #3F5576;
+  border-radius: 7px;
+  color: white;
+  font-size: 20px;
+  padding: 5px 25px;
+}
+.erase-modal__cancel:hover {
+  cursor: pointer;
+  box-shadow: inset 0 3px 4px 0 rgba(0, 0, 0, 0.25);
+}
+.erase-modal__cancel:active {
+  box-shadow: none;
+}
+
+.password-modal {
+  z-index: 10;
+  width: 400px;
+  border-radius: 15px;
+  background-color: #587099;
+  border: none;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+}
+.password-modal:focus-visible {
+  border: none;
+  outline: none;
+}
+.password-modal::backdrop {
+  background-color: rgba(0, 0, 0, 0.9058823529);
+}
+.password-modal__title-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 20px;
+}
+.password-modal__title {
+  font-size: 26px;
+  color: white;
+  text-align: center;
+}
+.password-modal__form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+.password-modal__button-container {
+  padding-top: 10px;
+  justify-content: center;
+  display: flex;
+  gap: 20px;
+}
+.password-modal__input {
+  width: 276px;
+  height: 32px;
+  padding: 2px 6px;
+  background-color: #3F5576;
+  border-radius: 7px;
+  border: none;
+  box-shadow: inset 0 3px 4px 0 rgba(0, 0, 0, 0.25);
+  color: white;
+  font-size: 20px;
+  letter-spacing: 0.05em;
+  line-height: 1em;
+}
+.password-modal__input:focus-visible {
+  outline: none;
+}
+.password-modal__input::-moz-placeholder {
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.2941176471);
+}
+.password-modal__input::placeholder {
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.2941176471);
+}
+.password-modal__submit {
+  width: 120px;
+  background-color: #3F5576;
+  border-radius: 7px;
+  color: white;
+  font-size: 20px;
+  padding: 5px 25px;
+}
+.password-modal__submit:hover {
+  cursor: pointer;
+  box-shadow: inset 0 3px 4px 0 rgba(0, 0, 0, 0.25);
+}
+.password-modal__submit:active {
+  box-shadow: none;
+}
+.password-modal__cancel {
+  width: 120px;
+  background-color: #3F5576;
+  border-radius: 7px;
+  color: white;
+  font-size: 20px;
+  padding: 5px 25px;
+}
+.password-modal__cancel:hover {
+  cursor: pointer;
+  box-shadow: inset 0 3px 4px 0 rgba(0, 0, 0, 0.25);
+}
+.password-modal__cancel:active {
+  box-shadow: none;
+}
+
 .header {
   display: grid;
   grid-template-columns: 1fr 1fr 400px 2fr;
@@ -533,9 +784,6 @@ button {
   font-size: 20px;
   letter-spacing: 0.05em;
   line-height: 1em;
-}
-.admin-panel-password-input.input-red {
-  border: 1px solid red;
 }
 .admin-panel-password-input:focus-visible {
   outline: none;
@@ -966,4 +1214,8 @@ h2 {
 
 .hidden {
   display: none;
+}
+
+.input-red {
+  border: 1px solid red;
 }/*# sourceMappingURL=style.css.map */

@@ -36,6 +36,9 @@
     &.pushed-in
       transform: translateY(-44px)
 
+    &:focus-visible
+      outline: none
+
   &-button-image
     margin: 0 auto
     width: 16px
@@ -75,6 +78,46 @@
     background-repeat: no-repeat
     background-size: 90%
     background-position: center center
+
+    &:hover
+      cursor: pointer
+      box-shadow: inset 0 3px 4px 0 rgba(0, 0, 0, 0.25)
+
+    &:active
+      box-shadow: none
+
+    &:focus-visible
+      outline: none
+
+  &-erase
+    width: 32px
+    height: 32px
+    background-color: $color1
+    border-radius: 7px
+    background-image: url(./images/skull.svg)
+    background-repeat: no-repeat
+    background-size: 80%
+    background-position: center center
+
+    &:hover
+      cursor: pointer
+      box-shadow: inset 0 3px 4px 0 rgba(0, 0, 0, 0.25)
+
+    &:active
+      box-shadow: none
+
+    &:focus-visible
+      outline: none
+
+  &-password
+    width: 32px
+    height: 32px
+    background-color: $color1
+    border-radius: 7px
+    background-image: url(./images/password.svg)
+    background-repeat: no-repeat
+    background-size: 82%
+    background-position: 73% center
 
     &:hover
       cursor: pointer

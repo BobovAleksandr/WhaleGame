@@ -5,6 +5,8 @@
 @import settings
 @import workers-modal
 @import telegram-modal
+@import erase-modal
+@import password-modal
 
 .header
   display: grid
@@ -159,9 +161,6 @@
     font-size: 20px
     letter-spacing: 0.05em
     line-height: 1em
-
-    &.input-red
-      border: 1px solid red
     
     &:focus-visible
       outline: none
@@ -583,3 +582,6 @@ h2
 
 .hidden
   display: none
+
+.input-red
+  border: 1px solid red

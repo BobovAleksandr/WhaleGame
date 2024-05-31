@@ -492,6 +492,7 @@ adminPanelButtonMove.addEventListener('click', () => {
   } else if ((adminPanelPasswordContainer.classList.contains('pushed-in') === true) && (adminPanel.classList.contains('pushed-in') === true)) {
     adminPanel.classList.remove('pushed-in')
     adminPanelPasswordContainer.classList.remove('pushed-in')
+    adminPanelPasswordInput.focus()
   } else if ((adminPanelPasswordContainer.classList.contains('pushed-in') === false) && (adminPanel.classList.contains('pushed-in') === false)) {
     adminPanel.classList.add('pushed-in')
     adminPanelPasswordContainer.classList.add('pushed-in')
@@ -517,22 +518,27 @@ if (!localStorage.getItem('currentPassword')) {
   localStorage.setItem('currentPassword', adminPassword)
 }
 
+// Покраска input'a в красный
+let turnRed = function(input, message) {
+  input.classList.toggle('input-red')
+  let oldMessage = input.placeholder
+  input.placeholder = message
+  setTimeout(() => {
+    input.classList.toggle('input-red')
+    input.placeholder = oldMessage
+  }, 1000);
+}
+
 // Ввод пароля
 adminPanelPasswordButton.addEventListener('click', () => {
   let currentPassword = adminPanelPasswordInput.value
   if (currentPassword === localStorage.getItem('currentPassword')) {
     adminPanelPasswordContainer.classList.toggle('pushed-in')
     settingsPanel.classList.remove('pushed-in-far')
+    adminPanelSelect.disabled = false
+    adminPanelInput.disabled = false
   } else {
-    let turnRed = function() {
-      adminPanelPasswordInput.classList.toggle('input-red')
-      adminPanelPasswordInput.placeholder = 'Пароль неверный'
-    }
-    turnRed()
-    setTimeout(() => {
-      turnRed()
-      adminPanelPasswordInput.placeholder = 'Введите пароль'
-    }, 1000);
+    turnRed(adminPanelPasswordInput, 'Пароль неверный')
   }
   adminPanelPasswordInput.value = ''
 })
@@ -569,6 +575,8 @@ const settingsPanelButtonMove = document.querySelector('.settings-panel-button-m
 const settingsPanelButtonImage = document.querySelector('.settings-panel-button-image')
 const settingsPanelButtonWorkers = document.querySelector('.settings-panel-workers')
 const settingsPanelButtonTelegram = document.querySelector('.settings-panel-telegram')
+const settingsPanelEraseButton = document.querySelector('.settings-panel-erase')
+const settingsPanelPasswordButton = document.querySelector('.settings-panel-password')
 
 settingsPanelButtonMove.addEventListener('click', () => {
   settingsPanel.classList.toggle('pushed-in')
@@ -582,6 +590,15 @@ settingsPanelButtonWorkers.addEventListener('click', () => {
 settingsPanelButtonTelegram.addEventListener('click', () => {
   showTelegramModal()
 })
+
+settingsPanelEraseButton.addEventListener('click', () => {
+  showEraseModal()
+})
+
+settingsPanelPasswordButton.addEventListener('click', () => {
+  showPasswordModal()
+})
+
 
 
 // Сохранение и загрузка --------------------------------------------------------------------------
@@ -765,18 +782,15 @@ let giveBonusCard = function() {
   let newWorkerId = currentSelect.value
   // let indexOfWorkerCard = workersList[currentWorkerId].cards.indexOf(currentCardValue)
   let newCardField = document.querySelectorAll('.workers-list-cards')[newWorkerId]
-  
+
   // Меняем ID сотрудника в карте
   currentCard.dataset['workerid'] = newWorkerId
-
   // Удаляем сдвиг блока текста карты
   currentCardTextField.classList.remove('moved-left-far')
   currentCardTextField.classList.remove('moved-left')
   currentSelect.value = ''
-
   // Удаляем карту
   currentCard.remove()
-
   // Перемещаем карту в другой объект-сотрудник
   let currentBonusCardIndex = workersList[currentWorkerId].cards.findIndex(card => +card.id === +currentBonusCardId)
   workersList[currentWorkerId].cards.splice(currentBonusCardIndex, 1)
@@ -961,6 +975,88 @@ let showWorkersModal = function() {
   workersModal.showModal()
 }
 
+// Модальное окно со сменой пароля ----------------------------------------------------------------
+let passwordModal = document.querySelector('.password-modal')
+let passwordInputPassword = document.querySelector('.password-modal__input--password')
+let passwordInputConfirm = document.querySelector('.password-modal__input--confirm')
+let passwordButtonCancel = document.querySelector('.password-modal__cancel')
+let passwordButtonSubmit = document.querySelector('.password-modal__submit')
+
+// Открытие модального окна
+let showPasswordModal = function() {
+  passwordModal.showModal()
+}
+
+// Нажатие отмены
+passwordButtonCancel.addEventListener('click', () => {
+  passwordModal.close()
+})
+
+// Закрытие модального окна при клике на backdrop
+passwordModal.addEventListener('click', (event) => {
+  const modalRect = passwordModal.getBoundingClientRect();
+  if (
+    event.clientX < modalRect.left ||
+    event.clientX > modalRect.right ||
+    event.clientY < modalRect.top ||
+    event.clientY > modalRect.bottom
+  ) {
+    passwordModal.close();
+  }
+})
+
+passwordButtonSubmit.addEventListener('click', () => {
+  if (passwordInputPassword && passwordInputConfirm) {
+    if ((passwordInputPassword.value === passwordInputConfirm.value)) {
+      changePassword(passwordInputPassword.value)
+      passwordModal.close()
+      location.reload()
+    } else {
+      passwordInputPassword.value = ''
+      passwordInputConfirm.value = ''
+      turnRed(passwordInputPassword, 'Пароли не совпадают')
+      turnRed(passwordInputConfirm, 'Пароли не совпадают')
+    }
+  }
+})
+
+
+// Модальное окно со стиранием Local Storage ------------------------------------------------------
+let eraseModal = document.querySelector('.erase-modal')
+let eraseSubmitButton = document.querySelector('.erase-modal__submit')
+let eraseCancelButton = document.querySelector('.erase-modal__cancel')
+
+// Открытие модального окна
+let showEraseModal = function() {
+  eraseModal.showModal()
+}
+
+// Нажатие отмены
+eraseCancelButton.addEventListener('click', () => {
+  eraseModal.close()
+})
+
+// Закрытие модального окна при клике на backdrop
+eraseModal.addEventListener('click', (event) => {
+  const modalRect = eraseModal.getBoundingClientRect();
+  if (
+    event.clientX < modalRect.left ||
+    event.clientX > modalRect.right ||
+    event.clientY < modalRect.top ||
+    event.clientY > modalRect.bottom
+  ) {
+    eraseModal.close();
+  }
+})
+
+// Стирание Local Storage
+eraseSubmitButton.addEventListener('click', () => {
+  localStorage.removeItem('workersList')
+  localStorage.removeItem('cardsList')
+  eraseModal.close()
+  location.reload()
+})
+
 // Модальное окно с настройками telegram ----------------------------------------------------------
 let telegramModal = document.querySelector('.telegram-modal')
 let telegramInputToken = document.querySelector('.telegram-modal__input--token')
@@ -974,6 +1070,7 @@ let API
 // Показ модального окна
 let showTelegramModal = function() {
   telegramModal.showModal()
+  checkTelegramModalValues()
 }
 
 // Закрытие при нажатии "Отмена"
@@ -984,18 +1081,41 @@ telegramCancel.addEventListener('click', () => {
 })
 
 // Передача значений input'ов
-telegramSubmit.addEventListener('click', () => {
+telegramSubmit.addEventListener("click", () => {
   if (telegramInputToken.value && telegramInputChat.value) {
-    TELEGRAM_BOT_TOKEN = telegramInputToken.value
-    TELEGRAM_CHAT_ID = telegramInputChat.value
-    telegramModal.close()
-    console.log(TELEGRAM_BOT_TOKEN)
-    console.log(TELEGRAM_CHAT_ID)
-    setTelegramBotInfo(TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID)
-    location.reload()
+    if (/^@/.test(telegramInputChat.value)) {
+      TELEGRAM_BOT_TOKEN = telegramInputToken.value;
+      TELEGRAM_CHAT_ID = telegramInputChat.value;
+      telegramModal.close();
+      setTelegramBotInfo(TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID);
+      location.reload();
+    } else {
+      telegramInputChat.value = ''
+      turnRed(telegramInputChat, 'Должно начинаться с @')
+    }
+  }
+});
+
+// Закрытие модального окна при клике на backdrop
+telegramModal.addEventListener('click', (event) => {
+  const modalRect = telegramModal.getBoundingClientRect();
+  if (
+    event.clientX < modalRect.left ||
+    event.clientX > modalRect.right ||
+    event.clientY < modalRect.top ||
+    event.clientY > modalRect.bottom
+  ) {
+    telegramModal.close();
   }
 })
 
+// Значения input'ов при открытии модального окна
+let checkTelegramModalValues = function() {
+  if (localStorage.getItem('telegramToken') && localStorage.getItem('telegramChatLink')) {
+    telegramInputToken.value = localStorage.getItem('telegramToken')
+    telegramInputChat.value = localStorage.getItem('telegramChatLink')
+  }
+}
 
 // Telegram бот -----------------------------------------------------------------------------------
 const setTelegramBotInfo = function(token, chatLink) {

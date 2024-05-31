@@ -46,6 +46,19 @@
       </div>
     </form>
   </dialog>
+  <dialog class="password-modal">
+    <div class="password-modal__title-container">
+      <h2 class="password-modal__title">Задайте новый пароль</h2>
+    </div>
+    <form class="password-modal__form" onsubmit="return false">
+      <input name="password-modal__input" type="password" class="password-modal__input password-modal__input--password" placeholder="Новый пароль">
+      <input name="password-modal__input" type="password" class="password-modal__input password-modal__input--confirm" placeholder="Подтверждение пароля">
+      <div class="password-modal__button-container">
+        <button class="password-modal__cancel" type="button">Отмена</button>
+        <button class="password-modal__submit" type="submit">Готово</button>
+      </div>
+    </form>
+  </dialog>
   <dialog class="telegram-modal">
     <div class="telegram-modal__title-container">
       <h2 class="telegram-modal__title">Введите токен telegram-бота и ссылку на telegram-чат</h2>
@@ -53,10 +66,10 @@
     <form class="telegram-modal__form" onsubmit="return false">
       <ul class="telegram-modal__list">
         <li class="telegram-modal__item">
-          <input type="text" class="telegram-modal__input telegram-modal__input--token" placeholder="API">
+          <input name="telegram-modal__input" required type="password" class="telegram-modal__input telegram-modal__input--token" placeholder="Bot token">
         </li>
         <li class="telegram-modal__item">
-          <input type="text" class="telegram-modal__input telegram-modal__input--chat" placeholder="@ChatName">
+          <input name="telegram-modal__input" required type="text" class="telegram-modal__input telegram-modal__input--chat" pattern="^@" placeholder="@ChatName">
         </li>
       </ul>
       <div class="telegram-modal__button-container">
@@ -64,6 +77,18 @@
         <button class="telegram-modal__submit" type="submit">Готово</button>
       </div>
     </form>
+  </dialog>
+  <dialog class="erase-modal">
+    <div class="erase-modal__text-container">
+      <p class="erase-modal__text">Это действие сотрёт ВСЕ сохранённые данные из локального хранилища!</p>
+      <p class="erase-modal__text">Будут удалены ВСЕ сотрудники, сброшены ВСЕ бонусные карточки.</p>
+      <p class="erase-modal__text">Это действие нельзя будет отменить!</p>
+      <p class="erase-modal__text erase-modal__text--big">Вы уверены?</p>
+    </div>
+    <div class="erase-modal__button-container">
+      <button class="erase-modal__cancel" type="button">Отмена</button>
+      <button class="erase-modal__submit" type="button">Стереть</button>
+    </div>
   </dialog>
   <header class="header">
     <div class="empty-deck-message">
@@ -77,13 +102,15 @@
       </button>
       <button class="settings-panel-workers" type="button"></button>
       <button class="settings-panel-telegram" type="button"></button>
+      <button class="settings-panel-password" type="button"></button>
+      <button class="settings-panel-erase" type="button"></button>
     </div>
     <div class="admin-panel-container">
       <button class="admin-panel-button-move pushed-in" type="button">
         <img src="./images/downarr.png" class="admin-panel-button-image">
       </button>
       <form class="admin-panel pushed-in" onsubmit="return false">
-        <select class="admin-panel-select" name="admin-panel-select" id="admin-panel-select">
+        <select disabled class="admin-panel-select" name="admin-panel-select" id="admin-panel-select">
           <!-- <option class="admin-panel-option" value="" disabled selected></option>
           <option class="admin-panel-option" value="0">Костиков Юрий</option>
           <option class="admin-panel-option" value="1">Сапожников Евгений</option>
@@ -91,7 +118,7 @@
           <option class="admin-panel-option" value="3">Кучукбаев Айдар</option>
           <option class="admin-panel-option" value="4">Конев Михаил</option> -->
         </select>
-        <input class="admin-panel-input" type="number">
+        <input disabled class="admin-panel-input" type="number">
         <button class="admin-panel-button-submit" type="submit"></button>
       </form>
       <form class="admin-panel-password pushed-in" onsubmit="return false">
