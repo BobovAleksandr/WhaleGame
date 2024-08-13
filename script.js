@@ -1,5 +1,4 @@
 let cards = [
-  {id: 0, value: 'Освобождение от разгрузки (только в вых)', isPassive: false},
   {id: 0, value: 'Освобождение от разгрузки (СБ, ВС)', isPassive: false},
   {id: 1, value: 'Освобождение от разгрузки (СБ, ВС)', isPassive: false},
   {id: 2, value: 'Освобождение от разгрузки (СБ, ВС)', isPassive: false},
@@ -477,6 +476,7 @@ const adminPanel = document.querySelector('.admin-panel')
 const adminPanelButtonMove = document.querySelector('.admin-panel-button-move')
 const adminPanelButtonImage = document.querySelector('.admin-panel-button-image')
 const adminPanelButtonSubmit = document.querySelector('.admin-panel-button-submit')
+const adminPanelButtonAddRolls = document.querySelector('.admin-panel-button-add-rolls')
 const adminPanelSelect = document.querySelector('.admin-panel-select')
 const adminPanelInput = document.querySelector('.admin-panel-input')
 
@@ -551,6 +551,18 @@ adminPanelButtonSubmit.addEventListener('click', () => {
   setWorkerLevel(selectedWorker, gainedExp)
   adminPanelSelect.value = ''
   adminPanelInput.value = ''
+})
+
+adminPanelButtonAddRolls.addEventListener('click', () => {
+  let selectedWorker = workersList.find(worker => worker.name === adminPanelSelect.textContent.trim())
+  selectedWorker.rolls++
+  let currentRollsCounter = [...document.querySelectorAll('.worker-name')].find(worker => worker.textContent === selectedWorker.name).closest('.worker-title').querySelector('.worker-rolls-bar')
+  let currentLevelButton = currentRollsCounter.closest('.worker-title').querySelector('.worker-get-random-card-button')
+  currentLevelButton.disabled = false
+  currentRollsCounter.textContent = selectedWorker.rolls
+  currentRollsCounter.classList.remove('hidden')
+  checkCardDeck()
+  saveData()
 })
 
 // Закрытие админки при клике мимо неё ------------- НЕ РАБОТАЕТ
