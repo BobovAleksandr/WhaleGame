@@ -48,7 +48,8 @@ let cards = [
   {id: 46, value: 'Добавить/убрать 200 позиций в Актуализацию', isPassive: false},
   {id: 47, value: 'Добавить/убрать 200 позиций в Актуализацию', isPassive: false},
   {id: 48, value: 'Добавить/убрать 200 позиций в Актуализацию', isPassive: false},
-  {id: 49, value: 'Добавить/убрать 200 позиций в Актуализацию', isPassive: false},  
+  {id: 49, value: 'Добавить/убрать 200 позиций в Актуализацию', isPassive: false},
+  {id: 50, value: 'Карта Уно Возврат', isPassive: false},
 ];
 
 let workersList = [
