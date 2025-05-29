@@ -1,35 +1,35 @@
 let cards = [
-  {id: 0, value: 'Освобождение от разгрузки (СБ, ВС)', isPassive: false},
-  {id: 1, value: 'Освобождение от разгрузки (СБ, ВС)', isPassive: false},
-  {id: 2, value: 'Освобождение от разгрузки (СБ, ВС)', isPassive: false},
-  {id: 3, value: 'Освобождение от разгрузки (СБ, ВС)', isPassive: false},
-  {id: 4, value: 'Освобождение от разгрузки (СБ, ВС)', isPassive: false},
-  {id: 5, value: 'Освобождение от разгрузки (СБ, ВС)', isPassive: false},
-  {id: 6, value: 'Передать дежурство другому УСМ', isPassive: false},
-  {id: 7, value: 'Передать дежурство другому УСМ', isPassive: false},
-  {id: 8, value: 'Передать дежурство другому УСМ', isPassive: false},
-  {id: 9, value: 'Передать дежурство другому УСМ', isPassive: false},
-  {id: 10, value: 'Передать дежурство другому УСМ', isPassive: false},
-  {id: 11, value: 'Передать дежурство другому УСМ', isPassive: true},
-  {id: 12, value: '-200 руб. за инвентаризацию', isPassive: true},
-  {id: 13, value: '-200 руб. за инвентаризацию', isPassive: true},
-  {id: 14, value: '-200 руб. за инвентаризацию', isPassive: true},
-  {id: 15, value: '-200 руб. за инвентаризацию', isPassive: true},
-  {id: 16, value: '-200 руб. за инвентаризацию', isPassive: false},
-  {id: 17, value: 'Освобождение от выставления', isPassive: false},
-  {id: 18, value: 'Освобождение от выставления', isPassive: false},
-  {id: 19, value: 'Освобождение от выставления', isPassive: false},
-  {id: 20, value: 'Освобождение от выставления', isPassive: false},
-  {id: 21, value: 'Освобождение от выставления', isPassive: false},
-  {id: 22, value: 'Освобождение от выставления', isPassive: false},
-  {id: 23, value: 'Освобождение от выставления', isPassive: false},
-  {id: 24, value: 'Освобождение от переоценки', isPassive: false},
-  {id: 25, value: 'Освобождение от переоценки', isPassive: false},
-  {id: 26, value: 'Освобождение от переоценки', isPassive: false},
-  {id: 27, value: 'Освобождение от переоценки', isPassive: false},
-  {id: 28, value: 'Освобождение от переоценки', isPassive: false},
-  {id: 29, value: 'Освобождение от переоценки', isPassive: false},
-  {id: 30, value: 'Освобождение от переоценки', isPassive: false},
+  {id: 0, value: 'Забрать/отдать Дежурство по складу', isPassive: false},
+  {id: 1, value: 'Забрать/отдать Дежурство по складу', isPassive: false},
+  {id: 2, value: 'Забрать/отдать Дежурство по складу', isPassive: false},
+  {id: 3, value: 'Забрать/отдать Дежурство по складу', isPassive: false},
+  {id: 4, value: 'Забрать/отдать Дежурство по складу', isPassive: false},
+  {id: 5, value: 'Забрать/отдать Дежурство по складу', isPassive: false},
+  {id: 6, value: 'Забрать/отдать Дежурство по складу', isPassive: false},
+  {id: 7, value: '-100Р за Инвентаризацию/Ценники', isPassive: false},
+  {id: 8, value: '-100Р за Инвентаризацию/Ценники', isPassive: false},
+  {id: 9, value: '-100Р за Инвентаризацию/Ценники', isPassive: false},
+  {id: 10, value: '-100Р за Инвентаризацию/Ценники', isPassive: false},
+  {id: 11, value: '-100Р за Инвентаризацию/Ценники', isPassive: true},
+  {id: 12, value: '-100Р за Инвентаризацию/Ценники', isPassive: true},
+  {id: 13, value: '-100Р за Инвентаризацию/Ценники', isPassive: true},
+  {id: 14, value: 'Забрать/отдать от выставление', isPassive: true},
+  {id: 15, value: 'Забрать/отдать от выставление', isPassive: true},
+  {id: 16, value: 'Забрать/отдать от выставление', isPassive: false},
+  {id: 17, value: 'Забрать/отдать от выставление', isPassive: false},
+  {id: 18, value: 'Забрать/отдать от выставление', isPassive: false},
+  {id: 19, value: 'Забрать/отдать от выставление', isPassive: false},
+  {id: 20, value: 'Забрать/отдать от выставление', isPassive: false},
+  {id: 21, value: 'Добавить/убрать 200 позиций в Актуализацию', isPassive: false},
+  {id: 22, value: 'Добавить/убрать 200 позиций в Актуализацию', isPassive: false},
+  {id: 23, value: 'Добавить/убрать 200 позиций в Актуализацию', isPassive: false},
+  {id: 24, value: 'Освобождение от переоценки (Не огромной)', isPassive: false},
+  {id: 25, value: 'Освобождение от переоценки (Не огромной)', isPassive: false},
+  {id: 26, value: 'Освобождение от переоценки (Не огромной)', isPassive: false},
+  {id: 27, value: 'Освобождение от переоценки (Не огромной)', isPassive: false},
+  {id: 28, value: 'Освобождение от переоценки (Не огромной)', isPassive: false},
+  {id: 29, value: 'Освобождение от переоценки (Не огромной)', isPassive: false},
+  {id: 30, value: 'Передать уборку другому УСМ', isPassive: false},
   {id: 31, value: 'Передать уборку другому УСМ', isPassive: true},
   {id: 32, value: 'Передать уборку другому УСМ', isPassive: true},
   {id: 33, value: 'Передать уборку другому УСМ', isPassive: true},
@@ -37,18 +37,18 @@ let cards = [
   {id: 35, value: 'Передать уборку другому УСМ', isPassive: true},
   {id: 36, value: 'Передать уборку другому УСМ', isPassive: true},
   {id: 37, value: 'Передать уборку другому УСМ', isPassive: true},
-  {id: 38, value: 'Передать уборку другому УСМ', isPassive: true},
-  {id: 39, value: '-200 руб. за неверные ценники', isPassive: true},
-  {id: 40, value: '-200 руб. за неверные ценники', isPassive: true},
-  {id: 41, value: '-200 руб. за неверные ценники', isPassive: false},
-  {id: 42, value: '-200 руб. за неверные ценники', isPassive: false},
-  {id: 43, value: '-200 руб. за неверные ценники', isPassive: false},
-  {id: 44, value: '-300 позиций в инвентаризацию', isPassive: false},
-  {id: 45, value: '-300 позиций в инвентаризацию', isPassive: false},
-  {id: 46, value: '-300 позиций в инвентаризацию', isPassive: false},
-  {id: 47, value: '-300 позиций в инвентаризацию', isPassive: false},
-  {id: 48, value: '-300 позиций в инвентаризацию', isPassive: false},
-  {id: 49, value: '-300 позиций в инвентаризацию', isPassive: false},  
+  {id: 38, value: 'Добавить/убрать 200 позиций в инвентаризацию (До 20го)', isPassive: true},
+  {id: 39, value: 'Добавить/убрать 200 позиций в инвентаризацию (До 20го)', isPassive: true},
+  {id: 40, value: 'Добавить/убрать 200 позиций в инвентаризацию (До 20го)', isPassive: true},
+  {id: 41, value: 'Добавить/убрать 200 позиций в инвентаризацию (До 20го)', isPassive: false},
+  {id: 42, value: 'Добавить/убрать 200 позиций в инвентаризацию (До 20го)', isPassive: false},
+  {id: 43, value: 'Добавить/убрать 200 позиций в инвентаризацию (До 20го)', isPassive: false},
+  {id: 44, value: 'Добавить/убрать 200 позиций в инвентаризацию (До 20го)', isPassive: false},
+  {id: 45, value: 'Добавить/убрать 200 позиций в инвентаризацию (До 20го)', isPassive: false},
+  {id: 46, value: 'Добавить/убрать 200 позиций в Актуализацию', isPassive: false},
+  {id: 47, value: 'Добавить/убрать 200 позиций в Актуализацию', isPassive: false},
+  {id: 48, value: 'Добавить/убрать 200 позиций в Актуализацию', isPassive: false},
+  {id: 49, value: 'Добавить/убрать 200 позиций в Актуализацию', isPassive: false},  
 ];
 
 let workersList = [
@@ -108,25 +108,25 @@ let workersList = [
 
 const expBrakpoints = [
   0,     // 1 лвл
-  1000,  // 2 лвл
-  2100,  // 3 лвл
-  3300,  // 4 лвл
-  4600,  // 5 лвл
-  6000,  // 6 лвл
-  7500,  // 7 лвл
-  9200,  // 8 лвл
-  11100, // 9 лвл
-  13200, // 10 лвл
-  15500, // 11 лвл
-  18000, // 12 лвл
-  20800, // 13 лвл
-  23900, // 14 лвл
-  27300, // 15 лвл
-  31000, // 16 лвл
-  35100, // 17 лвл
-  39600, // 18 лвл
-  44600, // 19 лвл
-  50100, // 20 лвл
+  2000,  // 2 лвл
+  4200,  // 3 лвл
+  6400,  // 4 лвл
+  8600,  // 5 лвл
+  10800,  // 6 лвл
+  13000,  // 7 лвл
+  15200,  // 8 лвл
+  17400, // 9 лвл
+  19600, // 10 лвл
+  21800, // 11 лвл
+  24000, // 12 лвл
+  26200, // 13 лвл
+  28400, // 14 лвл
+  30600, // 15 лвл
+  32800, // 16 лвл
+  35000, // 17 лвл
+  37200, // 18 лвл
+  39400, // 19 лвл
+  41600, // 20 лвл
   ]
 
 const addWorker = function(name, array) {
